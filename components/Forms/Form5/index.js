@@ -1,53 +1,41 @@
 import styles from "../Forms.module.scss";
-export default function Form2({onBack,onNext,visited}){
-    const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
+
+export default function Form6({ onBack, onNext, visited }) {
+    const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
     return <div tabIndex={0} className={formContainerStyle}>
-        <p className="font-bold text-2xl">Additional Details
+        <p className="font-bold text-2xl">General important information
+
         </p>
         <form>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                    Your Province
-                </div>
-                <div className={styles.inputGroup}>
-                    <input type={'text'} name={'first name'} placeholder={'Province'}/>
-                    </div>
 
-            </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Territory of residence on December 31, 2022
+                Did you own or hold specified foreign property where the total cost amount of all such property, at any time in 2021, was more than CAN$100,000?
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                    <option>
-                            
+                    <select style={{ width: 164 }}>
+                        <option>
+
                         </option>
                         <option>
-                            On
+                            Yes(Accordingly recommend filling out form T1135)
                         </option>
-                        
+                        <option>
+                            No
+                        </option>
+
                     </select>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                   Mailing Address
+                Did you dispose of your principal residence in 2021?
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'number'} name={'first name'} placeholder={''}/>
-                </div>
+                    <select style={{ width: 164 }}>
+                        <option>
 
-            </div>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                Is your home address same as your mailing address above?
-                </div>
-                <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                    <option>
-                        
                         </option>
                         <option>
                             Yes
@@ -55,28 +43,19 @@ export default function Form2({onBack,onNext,visited}){
                         <option>
                             No
                         </option>
-                        
+
                     </select>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Your current province or territory of residence if it is different from your mailing address above.
+                Do you have Canadian citizenship? 
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'number'} name={'first name'} placeholder={''}/>
-                </div>
+                    <select style={{ width: 164 }}>
+                        <option>
 
-            </div>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                Is this return for a deceased person?
-                </div>
-                <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                    <option>
-                        
                         </option>
                         <option>
                             Yes
@@ -84,19 +63,41 @@ export default function Form2({onBack,onNext,visited}){
                         <option>
                             No
                         </option>
-                        
+
                     </select>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Will you be filing the Income tax return with CRA for the first time?
+                if above is yes: As a Canadian citizen, do you authorize the Canada Revenue Agency to give your name, address, date of birth, and citizenship to Elections Canada to update the National Register of Electors or, if you are 14 to 17 years of age, the Register of Future Electors?
+
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                    <option>
-                        
+                    <select style={{ width: 164 }}>
+                        <option>
+
+                        </option>
+                        <option>
+                            Yes 
+
+                        </option>
+                        <option>
+                            No
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+            <div className={styles.formGroup}>
+                <div className={styles.formLabel}>
+                Are you registered or entitled to be registered under the Indian Act?
+                </div>
+                <div className={styles.inputGroup}>
+                    <select style={{ width: 164 }}>
+                        <option>
+
                         </option>
                         <option>
                             Yes
@@ -104,19 +105,19 @@ export default function Form2({onBack,onNext,visited}){
                         <option>
                             No
                         </option>
-                        
+
                     </select>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Did you become a resident of Canada (Immigrate) for tax purposes in 2022?
+                Were you confined to a prison or similar institution for a period of 90 days or more in 2021?   \
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                    <option>
-                        
+                    <select style={{ width: 164 }}>
+                        <option>
+
                         </option>
                         <option>
                             Yes
@@ -124,26 +125,79 @@ export default function Form2({onBack,onNext,visited}){
                         <option>
                             No
                         </option>
-                        
+
                     </select>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Date of Entry (If yes)
+                if the above is YES: Were you in prison on December 31, 2021 and had been there for a total of more than six months during 2021? 
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'date'} name={'date of birth'}/>
+                    <select style={{ width: 164 }}>
+                        <option>
+
+                        </option>
+                        <option>
+                            Yes
+                        </option>
+                        <option>
+                            No
+                        </option>
+
+                    </select>
                 </div>
 
             </div>
-            
+            <p className="text-lg">Optional benefits</p>
+            <div className={styles.formGroup}>
+                <div className={styles.formLabel}>
+                Will you claim the climate action benefit?
+                </div>
+                <div className={styles.inputGroup}>
+                    <select style={{ width: 164 }}>
+                        <option>
+
+                        </option>
+                        <option>
+                            Yes
+                        </option>
+                        <option>
+                            No
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+            <div className={styles.formGroup}>
+                <div className={styles.formLabel}>
+                Will you apply for the Ontario Trillium Benefit?
+                </div>
+                <div className={styles.inputGroup}>
+                    <select style={{ width: 164 }}>
+                        <option>
+
+                        </option>
+                        <option>
+                            Yes
+                        </option>
+                        <option>
+                            No
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+           
+
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
+
                     <button className={styles.btnBack} onClick={onBack}>Back</button>
                     <button className={styles.btnNext} onClick={onNext}>Next</button>
-
                 </div>
 
             </div>

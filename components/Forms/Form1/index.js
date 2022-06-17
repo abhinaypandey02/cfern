@@ -1,16 +1,17 @@
 import styles from "../Forms.module.scss";
 export default function Form1({onNext,visited}){
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
-    return <div tabIndex={0} className={formContainerStyle}>
+    return <div tabIndex={0} className={formContainerStyle } >
+        <p className="font-bold text-2xl">Sign Up</p>
         <form>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
                     Name
                 </div>
-                <div className={styles.inputGroup}>
-                    <input type={'text'} name={'first name'} placeholder={'First Name'}/>
-                    <input type={'text'} name={'middle name'} placeholder={'Middle Name'}/>
-                    <input type={'text'} name={'last name'} placeholder={'Last Name'}/>
+                <div className={styles.inputGroup }>
+                    <input type={'text'}  name={'first name' } placeholder={'First Name'}/>
+                    <input type={'text'}  name={'middle name'} placeholder={'Middle Name'}/>
+                    <input type={'text'}  name={'last name'} placeholder={'Last Name'}/>
                 </div>
 
             </div>
@@ -19,7 +20,7 @@ export default function Form1({onNext,visited}){
                     Social Insurance number
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'number'} name={'first name'} placeholder={''}/>
+                    <input type={'number'}  name={'first name'} placeholder={''}/>
                 </div>
 
             </div>
@@ -28,13 +29,13 @@ export default function Form1({onNext,visited}){
                     Date of birth
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'date'} name={'date of birth'}/>
+                    <input type={'date'}  name={'date of birth'}/>
                 </div>
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Preferred language
+                    Province/Territory
                 </div>
                 <div className={styles.inputGroup}>
                     <select style={{width:164}}>
@@ -42,10 +43,10 @@ export default function Form1({onNext,visited}){
 
                         </option>
                         <option>
-                            English
+                            Canada
                         </option>
                         <option>
-                            French
+                            United States
                         </option>
                     </select>
                 </div>
@@ -53,18 +54,21 @@ export default function Form1({onNext,visited}){
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Is this return for a deceased person?
+                    Marital Status
                 </div>
-                <div className={styles.inputGroup}>
+                <div className={styles.inputGroup + ""}>
                     <select style={{width:70}}>
                         <option>
 
                         </option>
                         <option>
-                            Yes
+                            Married
                         </option>
                         <option>
-                            No
+                            Single
+                        </option>
+                        <option>
+                            Divorced
                         </option>
                     </select>
                 </div>
