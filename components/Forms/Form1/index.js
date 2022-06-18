@@ -1,18 +1,26 @@
 import styles from "../Forms.module.scss";
-export default function Form1({onNext,visited}){
+import {useForm} from "react-hook-form";
+import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
+export default function Form1({onNext,formData,visited}){
+    const {register, handleSubmit, formState:{errors}}=useForm({defaultValues:formData});
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
+    function onSubmit(data) {
+        onNext(data)
+    }
+
     return <div tabIndex={0} className={formContainerStyle } >
         <p className="font-bold text-2xl">Sign Up</p>
-        <form>
+        <form noValidate={true} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
                     Name
                 </div>
                 <div className={styles.inputGroup }>
-                    <input type={'text'}  name={'first name' } placeholder={'First Name'}/>
-                    <input type={'text'}  name={'middle name'} placeholder={'Middle Name'}/>
-                    <input type={'text'}  name={'last name'} placeholder={'Last Name'}/>
+                    <input type={'text'} {...register('firstName',{required:true})}   placeholder={'First Name'}/>
+                    <input type={'text'} {...register('middleName')} placeholder={'Middle Name'}/>
+                    <input type={'text'} {...register('lastName',{required:true})} placeholder={'Last Name'}/>
                 </div>
+                <ErrorMessageComponent e={errors.firstName||errors.lastName||errors.middleName}/>
 
             </div>
             <div className={styles.formGroup}>
@@ -20,8 +28,9 @@ export default function Form1({onNext,visited}){
                     Social Insurance number
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'number'}  name={'first name'} placeholder={''}/>
+                    <input type={'number'} {...register('sin',{pattern:/^[0-9]+$/})}   placeholder={''}/>
                 </div>
+                <ErrorMessageComponent e={errors['sin']}/>
 
             </div>
             <div className={styles.formGroup}>
@@ -29,8 +38,9 @@ export default function Form1({onNext,visited}){
                     Date of birth
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'date'}  name={'date of birth'}/>
+                    <input {...register('dob',{required:true})} type={'date'}/>
                 </div>
+                <ErrorMessageComponent e={errors['dob']}/>
 
             </div>
             <div className={styles.formGroup}>
@@ -38,18 +48,21 @@ export default function Form1({onNext,visited}){
                     Province/Territory
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:164}}>
-                        <option>
-
+                    <select {...register('province',{validate:{
+                            notBlank:v=>v!==''
+                        }})} style={{width:164}}>
+                        <option value={''}>
                         </option>
-                        <option>
+                        <option value={"Canada2"}>
                             Canada
                         </option>
-                        <option>
+                        <option  value={"United States"}>
                             United States
                         </option>
                     </select>
                 </div>
+                <ErrorMessageComponent e={errors['province']}/>
+
 
             </div>
             <div className={styles.formGroup}>
@@ -57,26 +70,33 @@ export default function Form1({onNext,visited}){
                     Marital Status
                 </div>
                 <div className={styles.inputGroup + ""}>
-                    <select style={{width:70}}>
-                        <option>
+                    <select  {...register('maritalStatus',{validate:{
+                            notBlank:v=> {
+                                return v !== ''
+                            }
+                        }})} style={{width:100}}>
+                        <option value={''}>
 
                         </option>
-                        <option>
+                        <option value={'Married'}>
                             Married
                         </option>
-                        <option>
+                        <option value={'Single'}>
                             Single
                         </option>
-                        <option>
+                        <option value={'Divorced'}>
                             Divorced
                         </option>
                     </select>
                 </div>
+                <ErrorMessageComponent e={errors['maritalStatus']}/>
+
+
 
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button className={styles.btnNext} onClick={onNext}>Next</button>
+                    <button type={'submit'} className={styles.btnNext} >Next</button>
                 </div>
 
             </div>

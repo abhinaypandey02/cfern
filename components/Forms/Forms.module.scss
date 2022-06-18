@@ -9,15 +9,20 @@
 .formContainer {
   width: 50%;
   padding: 40px;
+  margin: 60px;
   border-radius: 10px;
   background-color: #ffffff;
   -webkit-box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
   -moz-box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
   box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
-
+  @media (max-width: 991.98px) { 
+     width: 90%;
+    padding: 25px;
+    margin: 20px;
+  }
   form {
     .formGroup {
-      margin: 18px 10px;
+      margin: 15px 10px;
 
       .formLabel {
         color: #1a1817;
@@ -27,6 +32,7 @@
       }
       .inputGroup{
         display: flex;
+        flex-wrap: wrap;
         input, select {
           margin: 4px;
           padding: 8px 6px;
@@ -68,4 +74,48 @@
 }
 .btnBack:hover{
   //@apply bg-blue-500 text-white border-transparent
+}
+.t4formGroup{
+  margin: 5px 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .formLabel {
+    position: relative;
+    color: #1a1817;
+    margin: 4px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .inputGroup{
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+    input, select {
+      max-width: 130px;
+      margin: 4px;
+      padding: 8px 6px;
+      background-color: #fff;
+      border: 1px solid #73706e;
+      border-radius: 5px 5px 5px 5px;
+      color: #403e3d;
+      font-weight: lighter;
+      outline: none;
+    }
+  }
+
+}
+
+.tooltip{
+  @apply drop-shadow;
+  background: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1;
+  position: absolute;
+  right:105%;
+  width: 150px;
+  border: 1px solid #c7c7c7;
 }

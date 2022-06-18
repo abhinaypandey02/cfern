@@ -8,11 +8,14 @@ import Form4 from "../components/Forms/Form4";
 import Form5 from "../components/Forms/Form5";
 import Form6 from "../components/Forms/Form6";
 import Form7 from "../components/Forms/Form7";
+import FormT4 from "../components/Forms/FormT4";
 
 export default function Home() {
     const [currentForm, setCurrentForm] = useState(0);
     const [prevForm, setPrevForm] = useState(0);
-    const onNext = () => setCurrentForm(old => {
+    const [formData,setFormData]=useState({});
+    const onNext = (data) => setCurrentForm(old => {
+        setFormData(old=>({...old,...data}))
         setPrevForm(old);
         return old + 1
     });
@@ -21,13 +24,13 @@ export default function Home() {
         return old - 1
     });
     const FORMS = [
-        <Form1 onNext={onNext} key={0} visited={currentForm < prevForm}/>,
-        <Form2 onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-        <Form3 onBack={onBack} onNext={onNext} key={2} visited={currentForm < prevForm}/>,
-        <Form4 onBack={onBack} onNext={onNext} key={3} visited={currentForm < prevForm}/>,
-        <Form5 onBack={onBack} onNext={onNext} key={4} visited={currentForm < prevForm}/>,
-        <Form6 onBack={onBack} onNext={onNext} key={5} visited={currentForm < prevForm}/>,
-        <Form7 onBack={onBack} key={6} visited={currentForm < prevForm}/>
+        <Form1 formData={formData} onNext={onNext} key={0} visited={currentForm < prevForm}/>,
+        <FormT4 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        <Form3 formData={formData} onBack={onBack} onNext={onNext} key={2} visited={currentForm < prevForm}/>,
+        <Form4 formData={formData} onBack={onBack} onNext={onNext} key={3} visited={currentForm < prevForm}/>,
+        <Form5 formData={formData} onBack={onBack} onNext={onNext} key={4} visited={currentForm < prevForm}/>,
+        <Form6 formData={formData} onBack={onBack} onNext={onNext} key={5} visited={currentForm < prevForm}/>,
+        <Form7 formData={formData} onBack={onBack} key={6} visited={currentForm < prevForm}/>
     ];
 
     return (<div>

@@ -1,6 +1,6 @@
 import styles from "../Forms.module.scss";
 
-export default function Form7({ onBack, onNext, visited }) {
+export default function Form7({ onBack, visited }) {
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
     return <div tabIndex={0} className={formContainerStyle}>
         <p className="font-bold text-2xl">Dependants:
@@ -262,7 +262,6 @@ Form T778 will be filled up and the output will go to Line/ Box 21400 of T1.
                 <div className={styles.inputGroup}>
 
                     <button className={styles.btnBack} onClick={onBack}>Back</button>
-                    <button className={styles.btnNext} onClick={onNext}>Next</button>
                 </div>
 
             </div>

@@ -1,6 +1,12 @@
 import styles from "../Forms.module.scss";
-export default function Form2({onBack,onNext,visited}){
+import {useForm} from "react-hook-form";
+export default function Form2({onBack,onNext,visited,formData}){
+    const {register, handleSubmit, formState:{errors}}=useForm({defaultValues:formData});
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
+    function onSubmit(data) {
+        onNext(data)
+    }
+
     return <div tabIndex={0} className={formContainerStyle}>
         <p className="font-bold text-2xl">Additional Details
         </p>
