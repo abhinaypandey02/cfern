@@ -1,0 +1,5 @@
+{
+  "PROVINCES": ["Canada","USA"],
+  "SELF_GOVERNING_FIRST_NATIONS": ["USA","CANADA"],
+  "MARITAL_STATUSES": ["Married","Widowed"]
+}

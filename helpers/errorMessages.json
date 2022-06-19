@@ -1,3 +1,5 @@
 {
-  "required": "This field is required"
+  "required": "This field is required",
+  "notBlank": "This field cannot be blank",
+  "onlyYes": "You cannot continue with No to that answer!"
 }

@@ -1,0 +1,18 @@
+
+.tooltip{
+  @apply drop-shadow;
+  background: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1;
+  position: absolute;
+  right:calc(100% + 20px);
+  min-width: 200px;
+  border: 1px solid #c7c7c7;
+  font-weight: 300;
+  font-size: 13px;
+}
+.tooltipRight{
+  @extend .tooltip;
+  left: 20px;
+}

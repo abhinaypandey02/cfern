@@ -1,6 +1,8 @@
 import styles from "../Forms.module.scss";
 import tooltips from '../../../helpers/tooltips.json'
 import {useState} from "react";
+import tooltipStyles from '../../Tooltip/Tooltip.module.scss';
+import Tooltip from "../../Tooltip";
 
 function SingleT4Form({deleteForm, showDelete, id}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
@@ -24,7 +26,7 @@ function SingleT4Form({deleteForm, showDelete, id}) {
             </div>
             <div className={styles.t4formGroup}>
                 <span className={styles.inputGroup}>
-                    {tooltipToShow === 10 && <div className={styles.tooltip}>
+                    {tooltipToShow === 10 && <div className={tooltipStyles.tooltip}>
                         {tooltips['t4'][10]}
                     </div>}
                     <div tabIndex={0} onMouseEnter={() => setTooltipToShow(10)}
@@ -46,7 +48,7 @@ function SingleT4Form({deleteForm, showDelete, id}) {
                     </select>
                 </span>
                 <span className={styles.inputGroup}>
-                    {tooltipToShow === 28 && <div className={styles.tooltip}>
+                    {tooltipToShow === 28 && <div className={tooltipStyles.tooltip}>
                         {tooltips['t4'][28]}
                     </div>}
                     <div tabIndex={0} onMouseEnter={() => setTooltipToShow(28)}
@@ -78,7 +80,7 @@ function SingleT4Form({deleteForm, showDelete, id}) {
 
                 {IMP.map(e => <span className={styles.inputGroup} key={e}>
 
-                    {tooltipToShow === e && <div className={styles.tooltip}>
+                    {tooltipToShow === e && <div className={tooltipStyles.tooltip}>
                         {tooltips['t4'][e]}
                     </div>}
                     <div tabIndex={0} onMouseEnter={() => setTooltipToShow(e)} onMouseLeave={() => setTooltipToShow(-1)}
@@ -133,24 +135,169 @@ function SingleT4Form({deleteForm, showDelete, id}) {
     </div>
 
 }
+function SingleT5Form({deleteForm, showDelete, id}) {
+    const [tooltipToShow, setTooltipToShow] = useState(-1);
+    const [extraBoxes, setExtraBoxes] = useState([]);
+    const [employeeName, setEmployeeName] = useState("Statement of Investment Income");
+    const IMP = [24,25,26,13,18,10,11,12]
+    return <div tabIndex={0} className={"m-2 my-7"}>
+        <div className="font-bold text-2xl mb-4 flex justify-between "><span>T5: {employeeName}</span>{showDelete &&
+            <button className={'font-extralight'} onClick={deleteForm}>X</button>}
+        </div>
+        <form>
+            <div className={styles.t4formGroup}>
+                <div className={styles.formLabel}>
+                    Name of payer
+                </div>
+                <div className={styles.inputGroup}>
+                    <input onBlur={e => setEmployeeName(e.target.value)} type={'text'} name={'first name'}
+                           placeholder={""}/>
+                </div>
 
-export default function FormT4({onBack, visited}) {
+            </div>
+            <div className={styles.t4formGroup}>
+                <span className={styles.inputGroup}>
+                    {tooltipToShow === 10 && <div className={tooltipStyles.tooltip}>
+                        {tooltips['t4'][10]}
+                    </div>}
+                    <div tabIndex={0} onMouseEnter={() => setTooltipToShow(10)}
+                         onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
+                        Exchange rate
+
+                    </div>
+                    <input type={'number'}/>
+                </span>
+            </div>
+            <div className={styles.t4formGroup}>
+
+                {IMP.map(e => <span className={styles.inputGroup} key={e}>
+
+                    {tooltipToShow === e && <div className={tooltipStyles.tooltip}>
+                        {tooltips['t4'][e]}
+                    </div>}
+                    <div tabIndex={0} onMouseEnter={() => setTooltipToShow(e)} onMouseLeave={() => setTooltipToShow(-1)}
+                         className={styles.formLabel}>
+                        {e}
+                    </div>
+                    <input type={'text'} id={"imp_box_" + id + e}/>
+                </span>)}
+
+            </div>
+
+            <div className={styles.formLabel} style={{margin: "15px 15px 0"}}>
+                Other boxes on your T5
+            </div>
+            <div className={styles.t4formGroup}>
+
+                {
+                    extraBoxes.map(box => <span className={styles.inputGroup} key={box}>
+
+                    {tooltipToShow === box && <div className={styles.tooltip}>
+                        {tooltips['t4'][box]}
+                    </div>}
+                        <div tabIndex={0} onMouseEnter={() => setTooltipToShow(box)}
+                             onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
+                        {box}
+                    </div>
+                    <input type={'text'} id={"imp_box_" + id + box}/>
+                </span>)
+                }
+                <span className={styles.inputGroup}>
+                    <input style={{width: 40}} width={20} placeholder={'Box'} onBlur={(e) => {
+                        const val = parseInt(e.target.value);
+                        if (!isNaN(val)) {
+                            if (IMP.includes(val) || extraBoxes.includes(val)) {
+                                const ele = document.getElementById("imp_box_" + id + val);
+                                if (ele) {
+                                    ele.focus();
+                                }
+                            } else {
+                                setExtraBoxes(old => [...old, val])
+                            }
+                        }
+                        e.target.value = ""
+                    }}/>
+                </span>
+
+
+            </div>
+            <div className={styles.formGroup} style={{backgroundColor:"#ececec",padding:10}}>
+                <div className={styles.inputGroup+" justify-between"}>
+                    <div className={''}>
+                        <div className={styles.formLabel}>
+                            If this is a joint account, your share
+                        </div>
+                        <input type={"number"}/>
+                        <Tooltip text={'If this is a joint account, enter the amount(s) as they appear on this T5. For example: if you earned $100 of interest in box 13 and own 75% of this account, enter $100 in box 13, and 75% in the box to the left. We\'ll then report $75 on your return.'}/>
+                    </div>
+                    <div>
+                        <div className={styles.formLabel}>
+                            Share with
+                        </div>
+                        <input type={"text"}/>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+}
+const SEARCH_OPTIONS=["T4","T5"]
+export default function FormT4({onBack,onNext, visited}) {
     const formData = useState([]);
-    const [forms, setForms] = useState([0]);
+    const [t4Forms, setT4Forms] = useState([]);
+    const [t5Forms, setT5Forms] = useState([]);
+    const [searchTerm,setSearchTerm]=useState("");
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
 
-    function deleteForm(id) {
+    function deleteT4Form(id) {
         return () => {
-            setForms(old => old.filter(f => f !== id));
+            setT4Forms(old => old.filter(f => f !== id));
         }
     }
+    function deleteT5Form(id) {
+        return () => {
+            setT4Forms(old => old.filter(f => f !== id));
+        }
+    }
+    function addForm(){
+        if(!SEARCH_OPTIONS.includes(searchTerm)){
+            return;
+        }
+        if(searchTerm==="T4"){
+            setT4Forms(o => [...o, o.length])
+        } else {
+            setT5Forms(o => [...o, o.length])
 
+        }
+    }
     return <div className={formContainerStyle}>
-        <button className={styles.btnBack} onClick={() => setForms(o => [...o, o.length])}>+</button>
+        <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Add income tax forms, deductions, and credits</h1>
+        <div className={styles.t4formGroup}>
+
+            <div className={styles.inputGroup+ " w-full mb-5"}>
+
+                <input placeholder={'Search to add forms (e.g. T4, T5)'} onChange={(e)=>setSearchTerm(e.target.value)} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
+                <datalist id="browsers">
+                    {SEARCH_OPTIONS.map(s=><option key={s} value={s}/>)}
+                </datalist>
+                <button className={styles.btnBack} onClick={addForm}>+</button>
+            </div>
+        </div>
+
+
         <div className='flex flex-wrap'>
-            {forms.map((form, i) => <div key={form}>
-                <SingleT4Form deleteForm={deleteForm(form)} id={form} showDelete={forms.length > 1}/>
-                {i < forms.length - 1 && <hr/>}
+            {t4Forms.map((form, i) => <div key={form}>
+                <SingleT4Form deleteForm={deleteT4Form(form)} id={form} showDelete={true}/>
+                {i < t4Forms.length - 1 && <hr/>}
+            </div>)}
+
+        </div>
+        <div className='flex flex-wrap'>
+            {t5Forms.map((form, i) => <div key={form}>
+                <SingleT5Form deleteForm={deleteT5Form(form)} id={form} showDelete={true}/>
+                {i < t5Forms.length - 1 && <hr/>}
             </div>)}
 
         </div>
@@ -158,6 +305,7 @@ export default function FormT4({onBack, visited}) {
             <div className={styles.inputGroup}>
 
                 <button className={styles.btnBack} onClick={onBack}>Back</button>
+                <button className={styles.btnNext} onClick={()=>onNext({})}>Preview</button>
             </div>
 
         </div>

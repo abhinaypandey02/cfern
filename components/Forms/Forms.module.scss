@@ -33,6 +33,7 @@
       .inputGroup{
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
         input, select {
           margin: 4px;
           padding: 8px 6px;
@@ -106,16 +107,4 @@
     }
   }
 
-}
-
-.tooltip{
-  @apply drop-shadow;
-  background: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  z-index: 1;
-  position: absolute;
-  right:105%;
-  width: 150px;
-  border: 1px solid #c7c7c7;
 }

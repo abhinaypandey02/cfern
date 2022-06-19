@@ -1,203 +1,123 @@
 import styles from "../Forms.module.scss";
+import {useForm} from "react-hook-form";
+import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
+import Tooltip from "../../Tooltip";
+import {PROVINCES,MARITAL_STATUSES} from '../../../helpers/values.json';
 
-export default function Form6({ onBack, onNext, visited }) {
-    const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
-    return <div tabIndex={0} className={formContainerStyle}>
-        <p className="font-bold text-2xl">General important information
+export default function Form5({onNext,onBack,formData,visited}){
+    const {register,watch, handleSubmit, formState:{errors:e}}=useForm({defaultValues:formData});
+    const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
+    function onSubmit(data) {
+        onNext(data)
+    }
 
-        </p>
-        <form>
-
+    return <div tabIndex={0} className={formContainerStyle } >
+        <p className="font-bold text-2xl font">You and Your Family</p>
+        <form noValidate={true} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Did you own or hold specified foreign property where the total cost amount of all such property, at any time in 2021, was more than CAN$100,000?
+                    Marital status on December 31, 2021 *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
-                        </option>
-                        <option>
-                            Yes(Accordingly recommend filling out form T1135)
-                        </option>
-                        <option>
-                            No
-                        </option>
-
+                    <select {...register('maritalStatus')}   placeholder={''}>
+                        <option></option>
+                        {MARITAL_STATUSES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
                 </div>
-
+                <ErrorMessageComponent e={e['maritalStatus']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Did you dispose of your principal residence in 2021?
+                    Do you want to prepare your returns together?
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
+                    <select  {...register('prepareReturnsTogether')} style={{width:100}}>
+                        <option value={0}>
+                            No
                         </option>
-                        <option>
+                        <option value={1}>
                             Yes
                         </option>
-                        <option>
-                            No
-                        </option>
-
                     </select>
                 </div>
-
+                <ErrorMessageComponent e={e['prepareReturnsTogether']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Do you have Canadian citizenship? 
+                    Did your marital status change in 2021?
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
+                    <select  {...register('maritalStatusChanged')} style={{width:100}}>
+                        <option value={0}>
+                            No
                         </option>
-                        <option>
+                        <option value={1}>
                             Yes
                         </option>
-                        <option>
-                            No
-                        </option>
-
                     </select>
                 </div>
-
+                <ErrorMessageComponent e={e['maritalStatusChanged']}/>
             </div>
-            <div className={styles.formGroup}>
+            {watch("maritalStatusChanged")==='1'&&<div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                if above is yes: As a Canadian citizen, do you authorize the Canada Revenue Agency to give your name, address, date of birth, and citizenship to Elections Canada to update the National Register of Electors or, if you are 14 to 17 years of age, the Register of Future Electors?
-
+                    Date of change
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
+                    <input {...register('dateOfChange',{required:true})} type={'date'}/>
+                </div>
+                <ErrorMessageComponent e={e['dateOfChange']}/>
 
-                        </option>
-                        <option>
-                            Yes 
-
-                        </option>
-                        <option>
-                            No
-                        </option>
-
+            </div>}
+            {watch("maritalStatusChanged")==='1'&&<div className={styles.formGroup}>
+                <div className={styles.formLabel}>
+                    What was your marital status before the change?
+                </div>
+                <div className={styles.inputGroup}>
+                    <select {...register('maritalStatusBefore',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
+                        <option></option>
+                        {MARITAL_STATUSES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
                 </div>
+                <ErrorMessageComponent e={e['maritalStatusBefore']}/>
+            </div>}
 
-            </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Are you registered or entitled to be registered under the Indian Act?
+                    Do you have any dependants?
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
+                    <select  {...register('anyDependents')} style={{width:100}}>
+                        <option value={0}>
+                            No
                         </option>
-                        <option>
+                        <option value={1}>
                             Yes
                         </option>
-                        <option>
-                            No
-                        </option>
-
                     </select>
                 </div>
-
+                <ErrorMessageComponent e={e['anyDependents']}/>
             </div>
-            <div className={styles.formGroup}>
+            {watch("anyDependents")==='1'&&<div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                Were you confined to a prison or similar institution for a period of 90 days or more in 2021?   \
+                    Did you have any children in shared custody? *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
+                    <select  {...register('sharedCustody',{validate:{notBlank:v=>v!==''}})} style={{width:100}}>
+                        <option/>
+                        <option value={0}>
+                            No
                         </option>
-                        <option>
+                        <option value={1}>
                             Yes
                         </option>
-                        <option>
-                            No
-                        </option>
-
                     </select>
                 </div>
-
-            </div>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                if the above is YES: Were you in prison on December 31, 2021 and had been there for a total of more than six months during 2021? 
-                </div>
-                <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
-                        </option>
-                        <option>
-                            Yes
-                        </option>
-                        <option>
-                            No
-                        </option>
-
-                    </select>
-                </div>
-
-            </div>
-            <p className="text-lg">Optional benefits</p>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                Will you claim the climate action benefit?
-                </div>
-                <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
-                        </option>
-                        <option>
-                            Yes
-                        </option>
-                        <option>
-                            No
-                        </option>
-
-                    </select>
-                </div>
-
-            </div>
-            <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                Will you apply for the Ontario Trillium Benefit?
-                </div>
-                <div className={styles.inputGroup}>
-                    <select style={{ width: 164 }}>
-                        <option>
-
-                        </option>
-                        <option>
-                            Yes
-                        </option>
-                        <option>
-                            No
-                        </option>
-
-                    </select>
-                </div>
-
-            </div>
-           
-
+                <ErrorMessageComponent e={e['sharedCustody']}/>
+            </div>}
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-
-                    <button className={styles.btnBack} onClick={onBack}>Back</button>
-                    <button className={styles.btnNext} onClick={onNext}>Next</button>
+                    <button onClick={onBack} className={styles.btnBack} >Back</button>
+                    <button type={'submit'} className={styles.btnNext} >Next</button>
                 </div>
 
             </div>
