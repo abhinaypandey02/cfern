@@ -19,7 +19,7 @@ export default function Form5({onNext,onBack,formData,visited}){
                     Marital status on December 31, 2021 *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select {...register('maritalStatus')}   placeholder={''}>
+                    <select style={{width:120}} {...register('maritalStatus')}   placeholder={''}>
                         <option></option>
                         {MARITAL_STATUSES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
@@ -99,7 +99,7 @@ export default function Form5({onNext,onBack,formData,visited}){
             </div>
             {watch("anyDependents")==='1'&&<div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Did you have any children in shared custody? *
+                    Did you have any children in <a href={'https://l.smpltx.ca/en/cra/ccb/shared'}>shared custody</a>? *
                 </div>
                 <div className={styles.inputGroup}>
                     <select  {...register('sharedCustody',{validate:{notBlank:v=>v!==''}})} style={{width:100}}>
@@ -111,6 +111,7 @@ export default function Form5({onNext,onBack,formData,visited}){
                             Yes
                         </option>
                     </select>
+                    <Tooltip text={'This information is only used for estimating your GST/HST credit and related provincial credits. \nIf not all of your children were in shared custody Wealthsimple Tax might underestimate your benefit payments. The CRA\'s calculators may provide a more accurate estimate.'}/>
                 </div>
                 <ErrorMessageComponent e={e['sharedCustody']}/>
             </div>}

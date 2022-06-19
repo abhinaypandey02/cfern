@@ -27,12 +27,13 @@ export default function Form6({onNext,onBack,formData,visited}){
                             Yes
                         </option>
                     </select>
+                    <Tooltip text={'If yes, you must complete form T1135.'}/>
                 </div>
                 <ErrorMessageComponent e={e['foreignProperty']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Did you dispose of your principal residence in 2021?
+                    Did you <a href={'https://l.smpltx.ca/en/cra/line-127/principal-residence'}>dispose of your principal residence</a> in 2021?
                 </div>
                 <div className={styles.inputGroup}>
                     <select  {...register('disposedPrincipalResidence')} style={{width:100}}>
@@ -43,6 +44,8 @@ export default function Form6({onNext,onBack,formData,visited}){
                             Yes
                         </option>
                     </select>
+                    <Tooltip text={'If, in 2021, you either sold or were deemed to have disposed of a property that was your principal residence at any time that you owned it, answer Yes.'}/>
+
                 </div>
                 <ErrorMessageComponent e={e['disposedPrincipalResidence']}/>
             </div>
@@ -59,6 +62,8 @@ export default function Form6({onNext,onBack,formData,visited}){
                             Yes
                         </option>
                     </select>
+                    <Tooltip text={'If you have ever filed a paper tax return or if someone has filed a tax return for you, answer “No”.'}/>
+
                 </div>
                 <ErrorMessageComponent e={e['fillingFirstTime']}/>
             </div>

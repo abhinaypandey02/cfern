@@ -15,11 +15,11 @@ export default function Form4({onNext,onBack,formData,visited}){
         <p className="font-bold text-2xl font">About Your Residence</p>
         <form noValidate={true} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.formGroup}>
-                <div className={styles.formLabel}>
-                    In which province or territory did you live on December 31, 2021? *
+                <div  className={styles.formLabel}>
+                    In which <a href={'https://my.wealthsimple.com/tax/2021/?lang=en'}>province or territory did you live</a> on December 31, 2021? *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select {...register('province31dec',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
+                    <select style={{width:120}}  {...register('province31dec',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
                         {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
@@ -58,7 +58,7 @@ export default function Form4({onNext,onBack,formData,visited}){
                     In which province or territory do you currently live? *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select {...register('provinceCurrent',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
+                    <select style={{width:120}} {...register('provinceCurrent',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
                         {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
@@ -130,7 +130,7 @@ export default function Form4({onNext,onBack,formData,visited}){
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
-                    Did you become a resident of Canada (immigrate) for tax purposes in 2021?
+                    Did you <a href={'https://l.smpltx.ca/en/cra/non-resident/become-resident'}>become a resident of Canada (immigrate)</a> for tax purposes in 2021?
                 </div>
                 <div className={styles.inputGroup}>
                     <select  {...register('newImmigrantTax')} style={{width:100}}>
@@ -144,11 +144,6 @@ export default function Form4({onNext,onBack,formData,visited}){
                 </div>
                 <ErrorMessageComponent e={e['newImmigrantTax']}/>
             </div>
-            {watch("newImmigrantTax")==='1'&&<div className={styles.formGroup}>
-            <div className={styles.formLabel}>
-                Learn more about filing a Canadian tax return as a new immigrant.
-            </div>
-            </div>}
             {watch("newImmigrantTax")==='1'&&<div className={styles.formGroup}>
                 <div className={styles.formLabel}>
                     Do you agree that it is your responsibility to properly report your income, allowable credits and deductions?

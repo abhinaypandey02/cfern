@@ -32,6 +32,7 @@ export default function Form2({onNext,onBack,formData,visited}){
                 </div>
                 <div className={styles.inputGroup}>
                     <input type={'text'} {...register('netfileCode')}   placeholder={''}/>
+                    <a className={styles.customAnchor} href={'https://help.simpletax.ca/questions/netfile-access-code'}>Learn More</a>
                 </div>
                 <ErrorMessageComponent e={errors['netfileCode']}/>
 

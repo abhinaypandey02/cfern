@@ -3,6 +3,8 @@ import tooltips from '../../../helpers/tooltips.json'
 import {useState} from "react";
 import tooltipStyles from '../../Tooltip/Tooltip.module.scss';
 import Tooltip from "../../Tooltip";
+import {useForm} from "react-hook-form";
+import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
 
 function SingleT4Form({deleteForm, showDelete, id}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
@@ -11,7 +13,7 @@ function SingleT4Form({deleteForm, showDelete, id}) {
     const IMP = [14, 16, 17, 18, 20]
     return <div tabIndex={0} className={"m-2 my-7"}>
         <div className="font-bold text-2xl mb-4 flex justify-between "><span>T4: {employeeName}</span>{showDelete &&
-            <button className={'font-extralight'} onClick={deleteForm}>X</button>}
+            <button className={'font-extralight'} onClick={deleteForm}><img src="https://img.icons8.com/material-sharp/24/undefined/delete.png"/></button>}
         </div>
         <form>
             <div className={styles.t4formGroup}>
@@ -142,7 +144,7 @@ function SingleT5Form({deleteForm, showDelete, id}) {
     const IMP = [24,25,26,13,18,10,11,12]
     return <div tabIndex={0} className={"m-2 my-7"}>
         <div className="font-bold text-2xl mb-4 flex justify-between "><span>T5: {employeeName}</span>{showDelete &&
-            <button className={'font-extralight'} onClick={deleteForm}>X</button>}
+            <button className={'font-extralight'} onClick={deleteForm}><img src="https://img.icons8.com/material-sharp/24/undefined/delete.png"/></button>}
         </div>
         <form>
             <div className={styles.t4formGroup}>
@@ -248,7 +250,6 @@ export default function FormT4({onBack,onNext, visited}) {
     const formData = useState([]);
     const [t4Forms, setT4Forms] = useState([]);
     const [t5Forms, setT5Forms] = useState([]);
-    const [searchTerm,setSearchTerm]=useState("");
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
 
     function deleteT4Form(id) {
@@ -261,10 +262,7 @@ export default function FormT4({onBack,onNext, visited}) {
             setT4Forms(old => old.filter(f => f !== id));
         }
     }
-    function addForm(){
-        if(!SEARCH_OPTIONS.includes(searchTerm)){
-            return;
-        }
+    function addForm({searchTerm}){
         if(searchTerm==="T4"){
             setT4Forms(o => [...o, o.length])
         } else {
@@ -272,18 +270,22 @@ export default function FormT4({onBack,onNext, visited}) {
 
         }
     }
+    const {register,handleSubmit, formState:{errors}}=useForm();
     return <div className={formContainerStyle}>
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Add income tax forms, deductions, and credits</h1>
         <div className={styles.t4formGroup}>
+            <div className={'mb-5 w-full'}>
+                <form onSubmit={handleSubmit(addForm)} className={styles.inputGroup+ " w-full "}>
 
-            <div className={styles.inputGroup+ " w-full mb-5"}>
-
-                <input placeholder={'Search to add forms (e.g. T4, T5)'} onChange={(e)=>setSearchTerm(e.target.value)} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
-                <datalist id="browsers">
-                    {SEARCH_OPTIONS.map(s=><option key={s} value={s}/>)}
-                </datalist>
-                <button className={styles.btnBack} onClick={addForm}>+</button>
+                    <input {...register("searchTerm",{validate:{validForm:v=>SEARCH_OPTIONS.includes(v)}})} placeholder={'Search to add forms (e.g. T4, T5)'} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
+                    <datalist id="browsers">
+                        {SEARCH_OPTIONS.map(s=><option key={s} value={s}/>)}
+                    </datalist>
+                    <button className={styles.btnBack} type={'submit'}>+</button>
+                </form>
+                <ErrorMessageComponent e={errors['searchTerm']}/>
             </div>
+
         </div>
 
 

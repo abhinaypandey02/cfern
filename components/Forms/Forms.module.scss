@@ -20,6 +20,17 @@
     padding: 25px;
     margin: 20px;
   }
+  a{
+    color: #4545b9;
+
+  }
+  a:hover{
+    text-decoration: underline;
+  }
+  .customAnchor{
+    font-size: 13px;
+    margin: 0 10px;
+  }
   form {
     .formGroup {
       margin: 15px 10px;
