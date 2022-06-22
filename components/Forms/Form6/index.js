@@ -19,7 +19,7 @@ export default function Form6({onNext,onBack,formData,visited}){
                     Did you own or hold specified foreign property where the total cost amount of all such property, at any time in the year, was more than CAN$100,000 in 2021? You are allowed to say No to this question in the year you became a Canadian resident.
                 </div>
                 <div className={styles.inputGroup}>
-                    <select  {...register('foreignProperty')} style={{width:100}}>
+                    <select  {...register('foreignPropertyCheck')} style={{width:100}}>
                         <option value={0}>
                             No
                         </option>
@@ -29,7 +29,7 @@ export default function Form6({onNext,onBack,formData,visited}){
                     </select>
                     <Tooltip text={'If yes, you must complete form T1135.'}/>
                 </div>
-                <ErrorMessageComponent e={e['foreignProperty']}/>
+                <ErrorMessageComponent e={e['foreignPropertyCheck']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>

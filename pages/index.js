@@ -14,6 +14,7 @@ export default function Home() {
     const [currentForm, setCurrentForm] = useState(0);
     const [prevForm, setPrevForm] = useState(0);
     const [formData,setFormData]=useState({});
+
     const onNext = (data) => setCurrentForm(old => {
         setFormData(old=>({...old,...data}))
         setPrevForm(old);

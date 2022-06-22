@@ -29,13 +29,13 @@ export default function Form3({onNext,onBack,formData,visited}){
                 <div className={styles.inputGroup}>
                     <input type={'text'} {...register('city',{required:true})}   placeholder={'City *'}/>
 
-                    <select className={'flex-grow'} {...register('province',{validate:{notBlank:v=>v!==''}})}   placeholder={'Province'}>
+                    <select className={'flex-grow'} {...register('prov',{validate:{notBlank:v=>v!==''}})}   placeholder={'Province'}>
                         <option value={''}>Province or Territory *</option>
                         {PROVINCES.map(p=><option key={p} value={p}>{p}</option>)}
                     </select>
                     <input type={'text'} {...register('postalCode',{required:true})}   placeholder={'Postal Code *'}/>
                 </div>
-                <ErrorMessageComponent e={e['city']||e['province']||e['postalCode']}/>
+                <ErrorMessageComponent e={e['city']||e['prov']||e['postalCode']}/>
 
             </div>
             <div className={styles.formGroup}>

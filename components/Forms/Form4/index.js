@@ -19,22 +19,22 @@ export default function Form4({onNext,onBack,formData,visited}){
                     In which <a href={'https://my.wealthsimple.com/tax/2021/?lang=en'}>province or territory did you live</a> on December 31, 2021? *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:120}}  {...register('province31dec',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
+                    <select style={{width:120}}  {...register('oldProvince',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
                         {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
                     <Tooltip text={'If you emigrated or are a non-resident of Canada, you can\'t use Wealthsimple Tax.'}/>
                 </div>
-                <ErrorMessageComponent e={e['province31dec']}/>
+                <ErrorMessageComponent e={e['oldProvince']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
                     If your province or territory of residence changed in 2021, enter the date of your move
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'date'} {...register('dateOfMove')}   placeholder={''}/>
+                    <input type={'date'} {...register('entryDate')}   placeholder={''}/>
                 </div>
-                <ErrorMessageComponent e={e['dateOfMove']}/>
+                <ErrorMessageComponent e={e['entryDate']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>
@@ -58,13 +58,13 @@ export default function Form4({onNext,onBack,formData,visited}){
                     In which province or territory do you currently live? *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select style={{width:120}} {...register('provinceCurrent',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
+                    <select style={{width:120}} {...register('currentProvince',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
                         {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
                     </select>
                     <Tooltip text={'This is where you currently live. It can be the same or different than your current mailing address.'}/>
                 </div>
-                <ErrorMessageComponent e={e['provinceCurrent']}/>
+                <ErrorMessageComponent e={e['currentProvince']}/>
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.formLabel}>

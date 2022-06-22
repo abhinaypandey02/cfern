@@ -6,7 +6,7 @@ import Tooltip from "../../Tooltip";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
 
-function SingleT4Form({deleteForm, showDelete, id}) {
+function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
     const [extraBoxes, setExtraBoxes] = useState([]);
     const [employeeName, setEmployeeName] = useState("Statement of Remuneration Paid");
@@ -89,7 +89,10 @@ function SingleT4Form({deleteForm, showDelete, id}) {
                          className={styles.formLabel}>
                         {e}
                     </div>
-                    <input type={'text'} id={"imp_box_" + id + e}/>
+                    <input onChange={ev=>{setT4FormData(o=>{
+                        o[`box${e}`]=ev.target.value;
+                        return o;
+                    })}} type={'text'} id={"imp_box_" + id + e}/>
                 </span>)}
 
             </div>
@@ -109,7 +112,10 @@ function SingleT4Form({deleteForm, showDelete, id}) {
                              onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
                         {box}
                     </div>
-                    <input type={'text'} id={"imp_box_" + id + box}/>
+                    <input onChange={e=>{setT4FormData(o=>{
+                        o[`box${box}`]=e.target.value;
+                        return o;
+                    })}} type={'text'} id={"imp_box_" + id + box}/>
                 </span>)
                 }
                 <span className={styles.inputGroup}>
@@ -247,7 +253,7 @@ function SingleT5Form({deleteForm, showDelete, id}) {
 }
 const SEARCH_OPTIONS=["T4","T5"]
 export default function FormT4({onBack,onNext, visited}) {
-    const formData = useState([]);
+    const [t4FormData,setT4FormData] = useState({});
     const [t4Forms, setT4Forms] = useState([]);
     const [t5Forms, setT5Forms] = useState([]);
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
@@ -291,7 +297,7 @@ export default function FormT4({onBack,onNext, visited}) {
 
         <div className='flex flex-wrap'>
             {t4Forms.map((form, i) => <div key={form}>
-                <SingleT4Form deleteForm={deleteT4Form(form)} id={form} showDelete={true}/>
+                <SingleT4Form setT4FormData={setT4FormData} deleteForm={deleteT4Form(form)} id={form} showDelete={true}/>
                 {i < t4Forms.length - 1 && <hr/>}
             </div>)}
 
@@ -307,7 +313,7 @@ export default function FormT4({onBack,onNext, visited}) {
             <div className={styles.inputGroup}>
 
                 <button className={styles.btnBack} onClick={onBack}>Back</button>
-                <button className={styles.btnNext} onClick={()=>onNext({})}>Preview</button>
+                <button className={styles.btnNext} onClick={()=>onNext(t4FormData)}>Preview</button>
             </div>
 
         </div>

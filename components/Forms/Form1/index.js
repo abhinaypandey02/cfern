@@ -48,7 +48,7 @@ export default function Form1({onNext,formData,visited}){
                     Preferred language *
                 </div>
                 <div className={styles.inputGroup}>
-                    <select {...register('preferredLanguage',{validate:{
+                    <select {...register('language',{validate:{
                             notBlank:v=>v!==''
                         }})} style={{width:164}}>
                         <option value={''}>
@@ -61,7 +61,7 @@ export default function Form1({onNext,formData,visited}){
                         </option>
                     </select>
                 </div>
-                <ErrorMessageComponent e={errors['preferredLanguage']}/>
+                <ErrorMessageComponent e={errors['language']}/>
 
 
             </div>
