@@ -17,10 +17,10 @@ export default function Preview({onBack,formData,visited}){
         formData.netIncomeSpouse="";
         formData.uccb11700="";
         formData.uccb21300="";
-        formData.dob=formData.dob?.replace('-','');
-        formData.dod=formData.dod?.replace('-','');
-        formData.entryDate=formData.entryDate?.replace('-','').slice(4);
-        formData.departureDate=formData.departureDate?.replace('-','').slice(4);
+        formData.dob=formData.dob?.replaceAll('-','');
+        formData.dod=formData.dod?.replaceAll('-','');
+        formData.entryDate=formData.entryDate?.replaceAll('-','').slice(4);
+        formData.departureDate=formData.departureDate?.replaceAll('-','').slice(4);
         for(let key in formData){
             if(formData[key]==='1'){
                 formData[key]=true;
