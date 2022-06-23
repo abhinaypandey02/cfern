@@ -30,7 +30,7 @@ export default function Preview({onBack,formData,visited}){
             }
         }
         console.log(formData)
-        axios.post('https://localhost:4000/updatePdf',formData).then(res=> {
+        axios.post('https://3.129.67.210:4000/updatePdf',formData).then(res=> {
             const length=Object.keys(res.data).length
             let bytes = new Uint8Array(length);
             for (let i = 0; i < bytes.length; i++) {
