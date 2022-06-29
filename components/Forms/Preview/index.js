@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import axios from 'axios';
 export default function Preview({onBack,formData,visited}){
     const [data,setData]=useState(null);
+    const [summary,setSummary]=useState(null);
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
     useEffect(()=>{
         //mailingAddress
@@ -30,20 +31,28 @@ export default function Preview({onBack,formData,visited}){
             }
         }
         console.log(formData)
-        axios.post('http://3.129.67.210:4000/updatePdf',formData).then(res=> {
-            const length=Object.keys(res.data).length
+        function getBlobURLFromData(data){
+            const length=Object.keys(data).length
             let bytes = new Uint8Array(length);
             for (let i = 0; i < bytes.length; i++) {
-                bytes[i] = res.data[i];
+                bytes[i] = data[i];
             }
             const blob = new Blob([bytes], {type : 'application/pdf'});
-            setData(URL.createObjectURL(blob))
+            return URL.createObjectURL(blob)
+        }
+        axios.post('http://3.129.67.210:4000/updatePdf',formData).then(res=> {
+            console.log(res.data  )
+            setData(getBlobURLFromData(res.data[0]))
+            setSummary(getBlobURLFromData(res.data[1]))
         });
     },[]);
     return <div tabIndex={0} className={formContainerStyle } >
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Preview your details</h1>
         <div className={'my-5 flex justify-center'}>
             {data&&<iframe width={490} height={445} src={data} />}
+        </div>
+        <div className={'my-5 flex justify-center'}>
+            {summary&&<iframe width={490} height={445} src={summary} />}
         </div>
         <div className={styles.inputGroup}>
             <button onClick={onBack} className={styles.btnBack} >Back</button>
