@@ -25,13 +25,13 @@ export default function Home() {
         return old - 1
     });
     const FORMS = [
-        <Form1 formData={formData} onNext={onNext} key={0} visited={currentForm < prevForm}/>,
-        <Form2 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-        <Form3 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-        <Form4 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-        <Form5 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-        <Form6 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
-
+        // <Form1 formData={formData} onNext={onNext} key={0} visited={currentForm < prevForm}/>,
+        // <Form2 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        // <Form3 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        // <Form4 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        // <Form5 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        // <Form6 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
+        //
         <FormT4 formData={formData} onBack={onBack} onNext={onNext} key={1} visited={currentForm < prevForm}/>,
         <Preview formData={formData} onBack={onBack} key={1} visited={currentForm < prevForm}/>,
 

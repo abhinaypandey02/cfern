@@ -1,13 +1,17 @@
 import styles from "../Forms.module.scss";
 import {useEffect, useState} from "react";
 import axios from 'axios';
-export default function Preview({onBack,formData,visited}){
+export default function Preview(props){
     const [data,setData]=useState(null);
     const [summary,setSummary]=useState(null);
-    const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
+    const formContainerStyle=props.visited?styles.backAnim:styles.nextAnim;
     useEffect(()=>{
         //mailingAddress
-        formData.businessProvince=formData.prov;
+        let formData={...props.formData}
+        if(formData.t4Forms.length>0){
+            formData={...formData,...formData.t4Forms[0]}
+        }
+        formData.businessProvince=formData.box10;
         formData.departureDate=formData.entryDate;
         formData.email="";
         formData.rr="";
@@ -55,7 +59,7 @@ export default function Preview({onBack,formData,visited}){
             {summary&&<iframe width={490} height={445} src={summary} />}
         </div>
         <div className={styles.inputGroup}>
-            <button onClick={onBack} className={styles.btnBack} >Back</button>
+            <button onClick={props.onBack} className={styles.btnBack} >Back</button>
             <button className={styles.btnNext} >Submit</button>
         </div>
     </div>

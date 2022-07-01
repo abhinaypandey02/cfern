@@ -1,16 +1,22 @@
 import styles from "../Forms.module.scss";
 import tooltips from '../../../helpers/tooltips.json'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import tooltipStyles from '../../Tooltip/Tooltip.module.scss';
 import Tooltip from "../../Tooltip";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
 
-function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
+function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
-    const [extraBoxes, setExtraBoxes] = useState([]);
+    const [extraBoxes, setExtraBoxes] = useState(form.extraBoxes||[]);
     const [employeeName, setEmployeeName] = useState("Statement of Remuneration Paid");
     const IMP = [14, 16, 17, 18, 20]
+    useEffect(()=>{
+        setT4Forms(o=>{
+            o[form.id].extraBoxes=extraBoxes;
+            return o;
+        })
+    },[extraBoxes])
     return <div tabIndex={0} className={"m-2 my-7"}>
         <div className="font-bold text-2xl mb-4 flex justify-between "><span>T4: {employeeName}</span>{showDelete &&
             <button className={'font-extralight'} onClick={deleteForm}><img src="https://img.icons8.com/material-sharp/24/undefined/delete.png"/></button>}
@@ -21,7 +27,12 @@ function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
                     Company&apos;s Name
                 </div>
                 <div className={styles.inputGroup}>
-                    <input onBlur={e => setEmployeeName(e.target.value)} type={'text'} name={'first name'}
+                    <input value={form.employeeName} onChange={(e)=>{
+                    setT4Forms(o=>{
+                        o[form.id].employeeName=e.target.value;
+                        return o;
+                    })}
+                    } onBlur={e => setEmployeeName(e.target.value)} type={'text'} name={'first name'}
                            placeholder={""}/>
                 </div>
 
@@ -36,7 +47,10 @@ function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
                         10
 
                     </div>
-                    <select style={{width: 70}}>
+                    <select value={form.box10} onChange={ev=>{setT4Forms(o=>{
+                        o[form.id][`box10`]=ev.target.value;
+                        return o;
+                    })}} style={{width: 70}}>
                         <option>AB</option>
                         <option>AB</option>
                         <option>AB</option>
@@ -89,10 +103,10 @@ function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
                          className={styles.formLabel}>
                         {e}
                     </div>
-                    <input onChange={ev=>{setT4FormData(o=>{
-                        o[`box${e}`]=ev.target.value;
+                    <input value={form[`box${e}`]} onChange={ev=>{setT4Forms(o=>{
+                        o[form.id][`box${e}`]=ev.target.value;
                         return o;
-                    })}} type={'text'} id={"imp_box_" + id + e}/>
+                    })}} type={'text'} id={"imp_box_" + form.id + e}/>
                 </span>)}
 
             </div>
@@ -112,10 +126,11 @@ function SingleT4Form({deleteForm, showDelete, id, setT4FormData}) {
                              onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
                         {box}
                     </div>
-                    <input onChange={e=>{setT4FormData(o=>{
-                        o[`box${box}`]=e.target.value;
+                    <input value={form[`box${box}`]} onChange={e=>{setT4Forms(o=>{
+
+                        o[form.id][`box${box}`]=e.target.value;
                         return o;
-                    })}} type={'text'} id={"imp_box_" + id + box}/>
+                    })}} type={'text'} id={"imp_box_" + form.id + box}/>
                 </span>)
                 }
                 <span className={styles.inputGroup}>
@@ -252,30 +267,32 @@ function SingleT5Form({deleteForm, showDelete, id}) {
 
 }
 const SEARCH_OPTIONS=["T4","T5"]
-export default function FormT4({onBack,onNext, visited}) {
-    const [t4FormData,setT4FormData] = useState({});
-    const [t4Forms, setT4Forms] = useState([]);
-    const [t5Forms, setT5Forms] = useState([]);
+export default function FormT4({onBack,onNext, visited,formData}) {
+    const [t4Forms, setT4Forms] = useState(formData.t4Forms||[]);
+    const [t5Forms, setT5Forms] = useState(formData.t5Forms||[]);
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
 
     function deleteT4Form(id) {
         return () => {
-            setT4Forms(old => old.filter(f => f !== id));
+            setT4Forms(old => old.filter(f => f.id !== id));
         }
     }
     function deleteT5Form(id) {
         return () => {
-            setT4Forms(old => old.filter(f => f !== id));
+            setT4Forms(old => old.filter(f => f.id !== id));
         }
     }
     function addForm({searchTerm}){
         if(searchTerm==="T4"){
-            setT4Forms(o => [...o, o.length])
+            setT4Forms(o => [...o, {id:o.length}])
         } else {
-            setT5Forms(o => [...o, o.length])
+            setT5Forms(o => [...o, {id:o.length}])
 
         }
     }
+    useEffect(()=>{
+        console.log(t4Forms)
+    },[t4Forms])
     const {register,handleSubmit, formState:{errors}}=useForm();
     return <div className={formContainerStyle}>
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Add income tax forms, deductions, and credits</h1>
@@ -296,8 +313,8 @@ export default function FormT4({onBack,onNext, visited}) {
 
 
         <div className='flex flex-wrap'>
-            {t4Forms.map((form, i) => <div key={form}>
-                <SingleT4Form setT4FormData={setT4FormData} deleteForm={deleteT4Form(form)} id={form} showDelete={true}/>
+            {t4Forms.map((form, i) => <div key={form.id}>
+                <SingleT4Form setT4Forms={setT4Forms} deleteForm={deleteT4Form(form.id)} form={form} showDelete={true}/>
                 {i < t4Forms.length - 1 && <hr/>}
             </div>)}
 
@@ -311,9 +328,8 @@ export default function FormT4({onBack,onNext, visited}) {
         </div>
         <div className={styles.formGroup}>
             <div className={styles.inputGroup}>
-
                 <button className={styles.btnBack} onClick={onBack}>Back</button>
-                <button className={styles.btnNext} onClick={()=>onNext(t4FormData)}>Preview</button>
+                <button className={styles.btnNext} onClick={()=>onNext({t4Forms,t5Forms})}>Preview</button>
             </div>
 
         </div>
