@@ -2,7 +2,6 @@ import styles from "../Forms.module.scss";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
 import Tooltip from "../../Tooltip";
-import {PROVINCES} from '../../../helpers/values.json';
 import codes from '../../../config/country-codes';
 import axios from "axios";
 import {useState} from "react";
@@ -46,7 +45,24 @@ export default function Form3({onNext, onBack, formData, visited}) {
                     <select className={'flex-grow'} {...register('prov', {validate: {notBlank: v => v !== ''}})}
                             placeholder={'Province'}>
                         <option value={''}>Province or Territory *</option>
-                        {PROVINCES.map(p => <option key={p} value={p}>{p}</option>)}
+
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NL">Newfoundland &amp; Labrador</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="NU">Nunavut</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Québec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="YT">Yukon</option>
+
+                        <option value="NR">Non-resident (not supported)</option>
+                        <option value="DR">Deemed resident (not supported)</option>
+
                     </select>
                     <input type={'text'} {...register('postalCode', {required: true})} placeholder={'Postal Code *'}/>
                 </div>
@@ -58,7 +74,8 @@ export default function Form3({onNext, onBack, formData, visited}) {
                     Home telephone number
                 </div>
                 <div className={styles.inputGroup}>
-                    <input placeholder={'Area Code'} style={{width: 120}} list={'country-list'} {...register('phoneCode', {
+                    <input placeholder={'Area Code'} style={{width: 120}}
+                           list={'country-list'} {...register('phoneCode', {
                         required: true, validate: {
                             validCode: v => codes.find(ele => ele.MobileCode === v) !== undefined
                         }
@@ -70,12 +87,12 @@ export default function Form3({onNext, onBack, formData, visited}) {
                     <input type={'number'} {...register('phoneNumber', {
                         validate: {
                             validateNumberAPI: async v => {
-                                const noErrors = await trigger(['co','unit','streetNo','streetName','city','prov','postalCode','phoneCode']);
+                                const noErrors = await trigger(['co', 'unit', 'streetNo', 'streetName', 'city', 'prov', 'postalCode', 'phoneCode']);
                                 if (!noErrors) return true;
                                 let code = getValues('phoneCode')
                                 if (!code) return false;
                                 setLoading(true);
-                                try{
+                                try {
                                     const res = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${code.slice(1) + v}`, {
                                         headers: {
                                             "apikey": "OjZjNzcNBEyO8xvVjilnHX5MjeBvC5Q5"
@@ -84,7 +101,7 @@ export default function Form3({onNext, onBack, formData, visited}) {
                                     setLoading(false);
                                     return res.data.valid;
 
-                                } catch(e){
+                                } catch (e) {
                                     setLoading(false);
 
                                     return true;

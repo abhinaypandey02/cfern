@@ -21,7 +21,22 @@ export default function Form4({onNext,onBack,formData,visited}){
                 <div className={styles.inputGroup}>
                     <select style={{width:120}}  {...register('oldProvince',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
-                        {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NL">Newfoundland &amp; Labrador</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="NU">Nunavut</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Québec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="YT">Yukon</option>
+
+                        <option value="NR">Non-resident (not supported)</option>
+                        <option value="DR">Deemed resident (not supported)</option>
                     </select>
                     <Tooltip text={'If you emigrated or are a non-resident of Canada, you can\'t use Wealthsimple Tax.'}/>
                 </div>
@@ -60,7 +75,22 @@ export default function Form4({onNext,onBack,formData,visited}){
                 <div className={styles.inputGroup}>
                     <select style={{width:120}} {...register('currentProvince',{validate:{notBlank:v=>v!==''}})}   placeholder={''}>
                         <option></option>
-                        {PROVINCES.map(p=><option value={p} key={p}>{p}</option>)}
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="NL">Newfoundland &amp; Labrador</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="NU">Nunavut</option>
+                        <option value="ON">Ontario</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="QC">Québec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="YT">Yukon</option>
+
+                        <option value="NR">Non-resident (not supported)</option>
+                        <option value="DR">Deemed resident (not supported)</option>
                     </select>
                     <Tooltip text={'This is where you currently live. It can be the same or different than your current mailing address.'}/>
                 </div>
@@ -89,7 +119,18 @@ export default function Form4({onNext,onBack,formData,visited}){
                 <div className={styles.inputGroup}>
                     <select {...register('selfGoverningNation',{required:true})}   placeholder={''}>
                         <option></option>
-                        {SELF_GOVERNING_FIRST_NATIONS.map(p=><option value={p} key={p}>{p}</option>)}
+                        <option value="None" selected=""></option>
+                        <option value="11001">Carcross/Tagish</option>
+                        <option value="11002">Champagne and Aishihik</option>
+                        <option value="11003">Kluane</option>
+                        <option value="11004">Kwanlin Dun</option>
+                        <option value="11006">Little Salmon/Carmacks</option>
+                        <option value="11007">Nacho Nyak Dun</option>
+                        <option value="11009">Selkirk</option>
+                        <option value="11010">Ta&apos;an Kwach&apos;an Council</option>
+                        <option value="11011">Teslin Tlingit</option>
+                        <option value="11012">Tr&apos;ondëk Hwëch&apos;in</option>
+                        <option value="11013">Vuntut Gwitchin</option>
                     </select>
                 </div>
                 <ErrorMessageComponent e={e['selfGoverningNation']}/>

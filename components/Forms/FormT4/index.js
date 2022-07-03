@@ -5,7 +5,12 @@ import tooltipStyles from '../../Tooltip/Tooltip.module.scss';
 import Tooltip from "../../Tooltip";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
-
+const T4Validations={
+    16:{
+        type:'number',
+        max:290.51
+    }
+}
 function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
     const [extraBoxes, setExtraBoxes] = useState(form.extraBoxes||[]);
@@ -21,7 +26,6 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
         <div className="font-bold text-2xl mb-4 flex justify-between "><span>T4: {employeeName}</span>{showDelete &&
             <button className={'font-extralight'} onClick={deleteForm}><img src="https://img.icons8.com/material-sharp/24/undefined/delete.png"/></button>}
         </div>
-        <form>
             <div className={styles.t4formGroup}>
                 <div className={styles.formLabel}>
                     Company&apos;s Name
@@ -103,10 +107,10 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                          className={styles.formLabel}>
                         {e}
                     </div>
-                    <input value={form[`box${e}`]} onChange={ev=>{setT4Forms(o=>{
+                    <input min={T4Validations[e]?.min} max={T4Validations[e]?.max} defaultValue={form[`box${e}`]} onChange={ev=>{setT4Forms(o=>{
                         o[form.id][`box${e}`]=ev.target.value;
                         return o;
-                    })}} type={'text'} id={"imp_box_" + form.id + e}/>
+                    })}} type={T4Validations[e]?T4Validations[e].type:'text'} id={"imp_box_" + form.id + e}/>
                 </span>)}
 
             </div>
@@ -126,7 +130,7 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                              onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
                         {box}
                     </div>
-                    <input value={form[`box${box}`]} onChange={e=>{setT4Forms(o=>{
+                    <input defaultValue={form[`box${box}`]} onChange={e=>{setT4Forms(o=>{
 
                         o[form.id][`box${box}`]=e.target.value;
                         return o;
@@ -153,7 +157,6 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
 
             </div>
 
-        </form>
 
     </div>
 
@@ -311,28 +314,33 @@ export default function FormT4({onBack,onNext, visited,formData}) {
 
         </div>
 
+        <form onSubmit={(e)=> {
+            e.preventDefault();
+            onNext({t4Forms, t5Forms})
+        }}>
+            <div className='flex flex-wrap'>
+                {t4Forms.map((form, i) => <div key={form.id}>
+                    <SingleT4Form setT4Forms={setT4Forms} deleteForm={deleteT4Form(form.id)} form={form} showDelete={true}/>
+                    {i < t4Forms.length - 1 && <hr/>}
+                </div>)}
 
-        <div className='flex flex-wrap'>
-            {t4Forms.map((form, i) => <div key={form.id}>
-                <SingleT4Form setT4Forms={setT4Forms} deleteForm={deleteT4Form(form.id)} form={form} showDelete={true}/>
-                {i < t4Forms.length - 1 && <hr/>}
-            </div>)}
-
-        </div>
-        <div className='flex flex-wrap'>
-            {t5Forms.map((form, i) => <div key={form}>
-                <SingleT5Form deleteForm={deleteT5Form(form)} id={form} showDelete={true}/>
-                {i < t5Forms.length - 1 && <hr/>}
-            </div>)}
-
-        </div>
-        <div className={styles.formGroup}>
-            <div className={styles.inputGroup}>
-                <button className={styles.btnBack} onClick={onBack}>Back</button>
-                <button className={styles.btnNext} onClick={()=>onNext({t4Forms,t5Forms})}>Preview</button>
             </div>
+            <div className='flex flex-wrap'>
+                {t5Forms.map((form, i) => <div key={form}>
+                    <SingleT5Form deleteForm={deleteT5Form(form)} id={form} showDelete={true}/>
+                    {i < t5Forms.length - 1 && <hr/>}
+                </div>)}
 
-        </div>
+            </div>
+            <div className={styles.formGroup}>
+                <div className={styles.inputGroup}>
+                    <button className={styles.btnBack} onClick={onBack}>Back</button>
+                    <button className={styles.btnNext} type={'submit'}>Preview</button>
+                </div>
+
+            </div>
+        </form>
+
     </div>
 
 }
