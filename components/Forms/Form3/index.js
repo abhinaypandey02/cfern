@@ -7,7 +7,7 @@ import axios from "axios";
 import {useState} from "react";
 
 export default function Form3({onNext, onBack, formData, visited}) {
-    const {register, handleSubmit, formState: {errors: e}, getValues, trigger} = useForm({defaultValues: formData});
+    const {register, handleSubmit, formState: {errors: e}, getValues, trigger} = useForm({defaultValues: formData,reValidateMode:'onSubmit'});
     const [loading, setLoading] = useState(false);
     const formContainerStyle = visited ? styles.backAnim : styles.nextAnim;
 
@@ -75,7 +75,7 @@ export default function Form3({onNext, onBack, formData, visited}) {
                 </div>
                 <div className={styles.inputGroup}>
                     <input placeholder={'Area Code'} style={{width: 120}}
-                           list={'country-list'} {...register('phoneCode', {
+                           list={'country-list'} {...register('areaCode', {
                         required: true, validate: {
                             validCode: v => codes.find(ele => ele.MobileCode === v) !== undefined
                         }
@@ -85,11 +85,12 @@ export default function Form3({onNext, onBack, formData, visited}) {
                         {codes.map((code, index) => <option key={index} value={code.MobileCode}>{code.Name}</option>)}
                     </datalist>
                     <input type={'number'} {...register('phoneNumber', {
+                        required:true,
                         validate: {
                             validateNumberAPI: async v => {
                                 const noErrors = await trigger(['co', 'unit', 'streetNo', 'streetName', 'city', 'prov', 'postalCode', 'phoneCode']);
                                 if (!noErrors) return true;
-                                let code = getValues('phoneCode')
+                                let code = getValues('areaCode')
                                 if (!code) return false;
                                 setLoading(true);
                                 try {

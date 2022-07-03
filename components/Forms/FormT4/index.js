@@ -5,23 +5,33 @@ import tooltipStyles from '../../Tooltip/Tooltip.module.scss';
 import Tooltip from "../../Tooltip";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
-const T4Validations={
-    16:{
-        type:'number',
-        max:290.51
-    }
-}
+
 function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
     const [extraBoxes, setExtraBoxes] = useState(form.extraBoxes||[]);
     const [employeeName, setEmployeeName] = useState("Statement of Remuneration Paid");
-    const IMP = [14, 16, 17, 18, 20]
+    const IMP = [14, 16, 17, 18, 20];
+    const T4Validations={
+        16:{
+            type:'number',
+            max:290.51
+        },
+        17:{
+            notAllowed:(form.cpp||form.ei||(form.ppip&&form.box10!=='QC')),
+        },
+        26:{
+            notAllowed:(form.cpp)
+        },
+        24:{
+            notAllowed:(form.ei)
+        },
+    }
     useEffect(()=>{
         setT4Forms(o=>{
             o[form.id].extraBoxes=extraBoxes;
-            return o;
+            return [...o];
         })
-    },[extraBoxes])
+    },[extraBoxes, form.id, setT4Forms])
     return <div tabIndex={0} className={"m-2 my-7"}>
         <div className="font-bold text-2xl mb-4 flex justify-between "><span>T4: {employeeName}</span>{showDelete &&
             <button className={'font-extralight'} onClick={deleteForm}><img src="https://img.icons8.com/material-sharp/24/undefined/delete.png"/></button>}
@@ -34,7 +44,7 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                     <input value={form.employeeName} onChange={(e)=>{
                     setT4Forms(o=>{
                         o[form.id].employeeName=e.target.value;
-                        return o;
+                        return [...o];
                     })}
                     } onBlur={e => setEmployeeName(e.target.value)} type={'text'} name={'first name'}
                            placeholder={""}/>
@@ -51,20 +61,27 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                         10
 
                     </div>
-                    <select value={form.box10} onChange={ev=>{setT4Forms(o=>{
+                    <select defaultValue={form.box10} onChange={ev=>{setT4Forms(o=>{
                         o[form.id][`box10`]=ev.target.value;
-                        return o;
+                        return [...o];
                     })}} style={{width: 70}}>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
-                        <option>AB</option>
+                        <option value="AB">AB</option>
+                        <option value="BC">BC</option>
+                        <option value="MB">MB</option>
+                        <option value="NB">NB</option>
+                        <option value="NL">NL</option>
+                        <option value="NS">NS</option>
+                        <option value="NT">NT</option>
+                        <option value="NU">NU</option>
+                        <option value="ON">ON</option>
+                        <option value="PE">PE</option>
+                        <option value="QC">QC</option>
+                        <option value="SK">SK</option>
+                        <option value="YT">YT</option>
+						<option value="US">US</option>
+						<option value="EZ">EZ</option>
+						<option value="EX">EX</option>
+						<option value="ZZ">ZZ</option>
                     </select>
                 </span>
                 <span className={styles.inputGroup}>
@@ -80,19 +97,35 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                 </label>
                 <input
                     className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
-                    type="checkbox" value="" id="flexCheckDefault"/>
+                    type="checkbox" onChange={ev=>{
+
+                    setT4Forms(o=>{
+                    o[form.id]['cpp']=ev.target.checked;
+                    return [...o];
+                })}} defaultChecked={form.cpp} id="flexCheckDefault"/>
                 <label className="form-check-label inline-block text-gray-800  mx-4" htmlFor="flexCheckDefault">
-                    CPP
+                    EI
                 </label>
                 <input
                     className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
-                    type="checkbox" value="" id="flexCheckDefault"/>
+                    type="checkbox" onChange={ev=>{
+
+                    setT4Forms(o=>{
+                    o[form.id]['ei']=ev.target.checked;
+                    return [...o];
+                })}} defaultChecked={form.ei} id="flexCheckDefault"/>
                 <label className="form-check-label inline-block text-gray-800 mx-4" htmlFor="flexCheckDefault">
-                    CPP
+                    PPIP
                 </label>
                 <input
                     className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
-                    type="checkbox" value="" id="flexCheckDefault"/>
+                    type="checkbox" onChange={ev=>{
+
+                    setT4Forms(o=>{
+                    o[form.id]['ppip']=ev.target.checked;
+                    console.log(123)
+                    return [...o];
+                })}} defaultChecked={form.ppip} id="flexCheckDefault"/>
                 </span>
 
             </div>
@@ -107,9 +140,9 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                          className={styles.formLabel}>
                         {e}
                     </div>
-                    <input min={T4Validations[e]?.min} max={T4Validations[e]?.max} defaultValue={form[`box${e}`]} onChange={ev=>{setT4Forms(o=>{
+                    <input min={T4Validations[e]?.min} placeholder={T4Validations[e]?.notAllowed?"Exempted":""} disabled={T4Validations[e]?.notAllowed} max={T4Validations[e]?.max} defaultValue={form[`box${e}`]} onChange={ev=>{setT4Forms(o=>{
                         o[form.id][`box${e}`]=ev.target.value;
-                        return o;
+                        return [...o];
                     })}} type={T4Validations[e]?T4Validations[e].type:'text'} id={"imp_box_" + form.id + e}/>
                 </span>)}
 
@@ -130,11 +163,11 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                              onMouseLeave={() => setTooltipToShow(-1)} className={styles.formLabel}>
                         {box}
                     </div>
-                    <input defaultValue={form[`box${box}`]} onChange={e=>{setT4Forms(o=>{
+                    <input min={T4Validations[box]?.min} placeholder={T4Validations[box]?.notAllowed?"Exempted":""} disabled={T4Validations[box]?.notAllowed} max={T4Validations[box]?.max} defaultValue={form[`box${box}`]} onChange={e=>{setT4Forms(o=>{
 
                         o[form.id][`box${box}`]=e.target.value;
-                        return o;
-                    })}} type={'text'} id={"imp_box_" + form.id + box}/>
+                        return [...o];
+                    })}} type={T4Validations[box]?T4Validations[box].type:'text'} id={"imp_box_" + form.id + box}/>
                 </span>)
                 }
                 <span className={styles.inputGroup}>
