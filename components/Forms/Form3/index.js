@@ -94,6 +94,7 @@ export default function Form3({onNext, onBack, formData, visited}) {
                                 if (!code) return false;
                                 setLoading(true);
                                 try {
+                                    return true;
                                     const res = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${code.slice(1) + v}`, {
                                         headers: {
                                             "apikey": "OjZjNzcNBEyO8xvVjilnHX5MjeBvC5Q5"
