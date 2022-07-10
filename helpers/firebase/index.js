@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider,signInWithRedirect } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
 import { collection, getDocs, getFirestore,doc,setDoc } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,4 +40,7 @@ export async function setSavedForm(form){
 }
 export async function signOut(){
     await auth.signOut();
+}
+export async function signInWithGoogle(){
+    await signInWithRedirect(auth, provider);
 }

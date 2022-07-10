@@ -2,7 +2,7 @@ import {useForm} from "react-hook-form";
 import styles from "../../Forms.module.scss";
 import ErrorMessageComponent from "../../../../helpers/errorMessageComponent";
 import { getAuth } from "firebase/auth";
-import {signIn} from "../../../../helpers/firebase";
+import {signIn, signInWithGoogle} from "../../../../helpers/firebase";
 
 
 export default function LoginForm({onSignUp}){
@@ -38,6 +38,10 @@ export default function LoginForm({onSignUp}){
             </div>
 
             <div className={styles.formGroup}>
+                <div className={styles.inputGroup+ " flex items-center !mb-5"}>
+                    <div>Or sign in with:</div>
+                    <button type={'button'} onClick={signInWithGoogle} className={styles.btnBack+" !p-2 !mx-4 !rounded-full"} ><img src="https://img.icons8.com/color/28/000000/google-logo.png"/></button>
+                </div>
                 <div className={styles.inputGroup}>
                     <button type={'submit'} className={styles.btnNext} >Login</button>
                     <button onClick={onSignUp} className={styles.btnBack} >Sign Up</button>
