@@ -4,5 +4,7 @@
   "onlyYes": "You cannot continue with No to that answer!",
   "validForm": "Please select from the list below",
   "equalsAboutUsName": "This should be same as the first name specified in previous form.",
-  "validateNumberAPI": "Not a valid number"
+  "validateNumberAPI": "Not a valid number",
+  "auth/user-not-found": "No such user exists. Please signup!",
+  "equalsPassword": "Passwords do not match!"
 }

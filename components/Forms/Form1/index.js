@@ -1,8 +1,7 @@
 import styles from "../Forms.module.scss";
 import {useForm} from "react-hook-form";
 import ErrorMessageComponent from "../../../helpers/errorMessageComponent";
-import {useEffect} from "react";
-export default function Form1({onNext,formData,visited}){
+export default function Form1({onNext,formData,visited,onBack}){
     const {register, watch, handleSubmit, formState:{errors}}=useForm({defaultValues:formData});
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
     function onSubmit(data) {
@@ -97,6 +96,7 @@ export default function Form1({onNext,formData,visited}){
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
                     <button type={'submit'} className={styles.btnNext} >Next</button>
+                    <button onClick={onBack} className={styles.btnBack} >Back</button>
                 </div>
 
             </div>
