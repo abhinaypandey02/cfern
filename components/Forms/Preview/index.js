@@ -34,18 +34,20 @@ export default function Preview(props){
                 formData[key]=false;
             }
         }
-        console.log(formData)
         function getBlobURLFromData(data){
+            console.log("PARSING DATA")
             const length=Object.keys(data).length
             let bytes = new Uint8Array(length);
             for (let i = 0; i < bytes.length; i++) {
                 bytes[i] = data[i];
             }
+            console.log("Done")
+
             const blob = new Blob([bytes], {type : 'application/pdf'});
             return URL.createObjectURL(blob)
         }
+        console.log("POSTING")
         axios.post('http://3.129.67.210:4000/updatePdf',formData).then(res=> {
-            console.log(res.data  )
             setData(getBlobURLFromData(res.data[0]))
             setSummary(getBlobURLFromData(res.data[1]))
         });

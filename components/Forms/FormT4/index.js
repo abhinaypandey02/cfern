@@ -10,7 +10,7 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
     const [tooltipToShow, setTooltipToShow] = useState(-1);
     const [extraBoxes, setExtraBoxes] = useState(form.extraBoxes||[]);
     const [employeeName, setEmployeeName] = useState("Statement of Remuneration Paid");
-    const IMP = [14, 16, 17, 18, 20];
+    const IMP = [14, 16, 17, 18, 20, 22, 24, 26, 44, 46, 50, 52, 55, 56, 29];
     const T4Validations={
         16:{
             type:'number',
