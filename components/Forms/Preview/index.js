@@ -41,16 +41,16 @@ export default function Preview(props){
             for (let i = 0; i < bytes.length; i++) {
                 bytes[i] = data[i];
             }
-            console.log("Done")
+            console.log("Done parsing data")
 
             const blob = new Blob([bytes], {type : 'application/pdf'});
             return URL.createObjectURL(blob)
         }
-        console.log("POSTING")
+        console.log("Sending pdf request with following data ",formData)
         axios.post('http://3.129.67.210:4000/updatePdf',formData).then(res=> {
             setData(getBlobURLFromData(res.data[0]))
             setSummary(getBlobURLFromData(res.data[1]))
-        });
+        }).catch(e=>console.error(e));
     },[]);
     return <div tabIndex={0} className={formContainerStyle } >
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Preview your details</h1>

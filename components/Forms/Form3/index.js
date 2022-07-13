@@ -64,7 +64,7 @@ export default function Form3({onNext, onBack, formData, visited}) {
                         <option value="DR">Deemed resident (not supported)</option>
 
                     </select>
-                    <input type={'text'} {...register('postalCode', {required: true})} placeholder={'Postal Code *'}/>
+                    <input maxLength={6} type={'text'} {...register('postalCode', {required: true})} placeholder={'Postal Code *'}/>
                 </div>
                 <ErrorMessageComponent e={e['city'] || e['prov'] || e['postalCode']}/>
 
@@ -86,31 +86,8 @@ export default function Form3({onNext, onBack, formData, visited}) {
                     </datalist>
                     <input type={'number'} {...register('phoneNumber', {
                         required:true,
-                        validate: {
-                            validateNumberAPI: async v => {
-                                const noErrors = await trigger(['co', 'unit', 'streetNo', 'streetName', 'city', 'prov', 'postalCode', 'phoneCode']);
-                                if (!noErrors) return true;
-                                let code = getValues('areaCode')
-                                if (!code) return false;
-                                setLoading(true);
-                                try {
-                                    return true;
-                                    const res = await axios.get(`https://api.apilayer.com/number_verification/validate?number=${code.slice(1) + v}`, {
-                                        headers: {
-                                            "apikey": "OjZjNzcNBEyO8xvVjilnHX5MjeBvC5Q5"
-                                        }
-                                    })
-                                    setLoading(false);
-                                    return res.data.valid;
 
-                                } catch (e) {
-                                    setLoading(false);
 
-                                    return true;
-                                }
-
-                            }
-                        }
                     })} placeholder={'Phone Number'}/>
                 </div>
                 <ErrorMessageComponent e={e['phoneCode'] || e['phoneNumber']}/>
@@ -119,7 +96,7 @@ export default function Form3({onNext, onBack, formData, visited}) {
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
                     <button onClick={onBack} className={styles.btnBack}>Back</button>
-                    <button type={'submit'} disabled={loading}
+                    <button type={'submit'}
                             className={styles.btnNext}>{loading ? "Validating number" : "Next"}</button>
                 </div>
 

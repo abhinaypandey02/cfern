@@ -123,7 +123,6 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
 
                     setT4Forms(o=>{
                     o[form.id]['ppip']=ev.target.checked;
-                    console.log(123)
                     return [...o];
                 })}} defaultChecked={form.ppip} id="flexCheckDefault"/>
                 </span>
@@ -315,7 +314,7 @@ export default function FormT4({onBack,onNext, visited,formData}) {
     }
     function deleteT5Form(id) {
         return () => {
-            setT4Forms(old => old.filter(f => f.id !== id));
+            setT5Forms(old => old.filter(f => f.id !== id));
         }
     }
     function addForm({searchTerm}){
@@ -326,15 +325,12 @@ export default function FormT4({onBack,onNext, visited,formData}) {
 
         }
     }
-    useEffect(()=>{
-        console.log(t4Forms)
-    },[t4Forms])
     const {register,handleSubmit, formState:{errors}}=useForm();
     return <div className={formContainerStyle}>
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Add income tax forms, deductions, and credits</h1>
         <div className={styles.t4formGroup}>
             <div className={'mb-5 w-full'}>
-                <form onSubmit={handleSubmit(addForm)} className={styles.inputGroup+ " w-full "}>
+                <form  onSubmit={handleSubmit(addForm)} className={styles.inputGroup+ " w-full "}>
 
                     <input {...register("searchTerm",{validate:{validForm:v=>SEARCH_OPTIONS.includes(v)}})} placeholder={'Search to add forms (e.g. T4, T5)'} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
                     <datalist id="browsers">
@@ -359,8 +355,8 @@ export default function FormT4({onBack,onNext, visited,formData}) {
 
             </div>
             <div className='flex flex-wrap'>
-                {t5Forms.map((form, i) => <div key={form}>
-                    <SingleT5Form deleteForm={deleteT5Form(form)} id={form} showDelete={true}/>
+                {t5Forms.map((form, i) => <div key={form.id}>
+                    <SingleT5Form deleteForm={deleteT5Form(form.id)} id={form.id} showDelete={true}/>
                     {i < t5Forms.length - 1 && <hr/>}
                 </div>)}
 
