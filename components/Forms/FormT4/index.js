@@ -61,10 +61,11 @@ function SingleT4Form({deleteForm, showDelete, form, setT4Forms}) {
                         10
 
                     </div>
-                    <select defaultValue={form.box10} onChange={ev=>{setT4Forms(o=>{
+                    <select required={true} defaultValue={form.box10} onChange={ev=>{setT4Forms(o=>{
                         o[form.id][`box10`]=ev.target.value;
                         return [...o];
                     })}} style={{width: 70}}>
+                        <option value={undefined}></option>
                         <option value="AB">AB</option>
                         <option value="BC">BC</option>
                         <option value="MB">MB</option>
@@ -345,6 +346,10 @@ export default function FormT4({onBack,onNext, visited,formData}) {
 
         <form onSubmit={(e)=> {
             e.preventDefault();
+            if(t4Forms.length===0) {
+                alert("T4 Form required to generate the pdf!");
+                return;
+            }
             onNext({t4Forms, t5Forms})
         }}>
             <div className='flex flex-wrap'>

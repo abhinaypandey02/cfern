@@ -8,5 +8,7 @@
   "auth/user-not-found": "No such user exists. Please signup!",
   "equalsPassword": "Passwords do not match!",
   "auth/weak-password": "Password too weak",
-  "auth/email-already-in-use": "Email already in use. Please login!"
+  "auth/email-already-in-use": "Email already in use. Please login!",
+  "minLength": "Field length too short!",
+  "maxLength": "Field too long!"
 }

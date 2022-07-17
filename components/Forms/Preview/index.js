@@ -1,12 +1,16 @@
 import styles from "../Forms.module.scss";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from 'axios';
 export default function Preview(props){
     const [data,setData]=useState(null);
     const [summary,setSummary]=useState(null);
+    const count=useRef(0);
     const formContainerStyle=props.visited?styles.backAnim:styles.nextAnim;
     useEffect(()=>{
         //mailingAddress
+        if(count.current>0)return;
+        count.current=1;
+        console.log(count.current)
         let formData={...props.formData}
         if(formData.t4Forms.length>0){
             formData={...formData,...formData.t4Forms[0]}
@@ -48,9 +52,12 @@ export default function Preview(props){
         }
         console.log("Sending pdf request with following data ",formData)
         axios.post('http://3.129.67.210:4000/updatePdf',formData).then(res=> {
-            setData(getBlobURLFromData(res.data[0]))
-            setSummary(getBlobURLFromData(res.data[1]))
-        }).catch(e=>console.error(e));
+            if(res.status===200){
+                setData(getBlobURLFromData(res.data[0]))
+                setSummary(getBlobURLFromData(res.data[1]))
+            }
+
+        }).catch(e=>alert(e.response.data));
     },[]);
     return <div tabIndex={0} className={formContainerStyle } >
         <h1 className={'text-center font-bold mb-5'} style={{fontSize:22}}>Preview your details</h1>

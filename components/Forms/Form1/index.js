@@ -27,7 +27,7 @@ export default function Form1({onNext,formData,visited,onBack}){
                     Social Insurance number *
                 </div>
                 <div className={styles.inputGroup}>
-                    <input type={'number'} {...register('sin',{required:true})}   placeholder={''}/>
+                    <input type={'number'} {...register('sin',{required:true,maxLength:9,minLength:9})}   placeholder={''}/>
                 </div>
                 <ErrorMessageComponent e={errors['sin']}/>
 
