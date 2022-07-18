@@ -24,20 +24,27 @@ export default function FormT4({onBack,onNext, visited,formData}) {
         const FORM={};
         forms.forEach(form=>{
             Object.keys(form).forEach(key=>{
-                if(key==='box10')FORM[key]=form[key]
-                else if(FORM[key]) FORM[key]+=form[key];
-                else FORM[key]=form[key]
+
+                if(isNaN(Number(form[key])))FORM[key]=form[key]
+                else if(FORM[key]) FORM[key]+=Number(form[key]);
+                else FORM[key]=Number(form[key])
 
             })
         })
         return FORM;
     }
     function addForm({searchTerm}){
-        if(searchTerm==="T4"){
-            setT4Forms(o => [...o, {id:o.length}])
-        } else {
-            setT5Forms(o => [...o, {id:o.length}])
+        switch(searchTerm.toUpperCase()){
+            case "T4":{
+                setT4Forms(o => [...o, {id:o.length}])
 
+                break;
+            }
+            case "T5":{
+                setT5Forms(o => [...o, {id:o.length}])
+
+                break;
+            }
         }
     }
     const {register,handleSubmit, formState:{errors}}=useForm();
@@ -47,7 +54,7 @@ export default function FormT4({onBack,onNext, visited,formData}) {
             <div className={'mb-5 w-full'}>
                 <form  onSubmit={handleSubmit(addForm)} className={styles.inputGroup+ " w-full "}>
 
-                    <input {...register("searchTerm",{validate:{validForm:v=>SEARCH_OPTIONS.includes(v)}})} placeholder={'Search to add forms (e.g. T4, T5)'} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
+                    <input {...register("searchTerm",{validate:{validForm:v=>SEARCH_OPTIONS.includes(v.toString().toUpperCase())}})} placeholder={'Search to add forms (e.g. T4, T5)'} type={'text'} list="browsers" className={'flex-grow !max-w-full'}/>
                     <datalist id="browsers">
                         {SEARCH_OPTIONS.map(s=><option key={s} value={s}/>)}
                     </datalist>
@@ -64,19 +71,8 @@ export default function FormT4({onBack,onNext, visited,formData}) {
                 alert("T4 Form required to generate the pdf!");
                 return;
             }
-            const T4={},T5={};
-            t4Forms.forEach(form=>{
-                Object.keys(form).forEach(key=>{
-                    if(T4[key]) T4[key]+=form[key];
-                })
-            })
-            t5Forms.forEach(form=>{
-                Object.keys(form).forEach(key=>{
-                    if(T4[key]) T4[key]+=form[key];
-                })
-            })
 
-            onNext({T4:getSum(t4Forms), T5:getSum(t5Forms)})
+            onNext({T4:getSum(t4Forms), T5:getSum(t5Forms),t4Forms,t5Forms})
         }}>
             <div className='flex flex-wrap'>
                 {t4Forms.map((form, i) => <div key={form.id}>
