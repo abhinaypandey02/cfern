@@ -12,7 +12,7 @@ export default function Slide1({onNext, formData, visited, onBack}) {
             label: "Name",
             inputs: [
                 {
-                    name: "firstName", placeholder: "First Name", rules: {required: true}
+                    name: "firstName", placeholder: "First Name123", rules: {required: true}
                 },
                 {
                     name: "middleName", placeholder: "Middle Name"
@@ -27,7 +27,7 @@ export default function Slide1({onNext, formData, visited, onBack}) {
             label: "Social Insurance number",
             inputs: [
                 {
-                    type: "number", name: "sin", rules: {required: true, maxLength: 9, minLength: 9}
+                    type: "number", name: "sin", rules: {required: true, maxLength: 9}
                 }
 
             ]

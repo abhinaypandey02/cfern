@@ -20,6 +20,18 @@ export default function FormT4({onBack,onNext, visited,formData}) {
             setT5Forms(old => old.filter(f => f.id !== id));
         }
     }
+    function getSum(forms){
+        const FORM={};
+        forms.forEach(form=>{
+            Object.keys(form).forEach(key=>{
+                if(key==='box10')FORM[key]=form[key]
+                else if(FORM[key]) FORM[key]+=form[key];
+                else FORM[key]=form[key]
+
+            })
+        })
+        return FORM;
+    }
     function addForm({searchTerm}){
         if(searchTerm==="T4"){
             setT4Forms(o => [...o, {id:o.length}])
@@ -52,7 +64,19 @@ export default function FormT4({onBack,onNext, visited,formData}) {
                 alert("T4 Form required to generate the pdf!");
                 return;
             }
-            onNext({t4Forms, t5Forms})
+            const T4={},T5={};
+            t4Forms.forEach(form=>{
+                Object.keys(form).forEach(key=>{
+                    if(T4[key]) T4[key]+=form[key];
+                })
+            })
+            t5Forms.forEach(form=>{
+                Object.keys(form).forEach(key=>{
+                    if(T4[key]) T4[key]+=form[key];
+                })
+            })
+
+            onNext({T4:getSum(t4Forms), T5:getSum(t5Forms)})
         }}>
             <div className='flex flex-wrap'>
                 {t4Forms.map((form, i) => <div key={form.id}>

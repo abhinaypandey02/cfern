@@ -11,11 +11,9 @@ export default function Preview(props){
         //mailingAddress
         if(count.current>0)return;
         count.current=1;
-        console.log(count.current)
         let formData={...props.formData}
-        if(formData.t4Forms.length>0){
-            formData={...formData,...formData.t4Forms[0]}
-        }
+        formData={...formData,...formData.T4}
+
         formData.businessProvince=formData.box10;
         formData.departureDate=formData.entryDate;
         formData.email="";
