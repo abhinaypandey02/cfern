@@ -4,7 +4,7 @@ import ErrorMessageComponent from "../../ErrorMessageComponent";
 import SITE_VALUES from "../../../helpers/values/values.json";
 import {FormGroup} from "../../FormElements/FormGroup";
 export default function Slide2({onNext,onBack,formData,visited}){
-    const {control, handleSubmit}=useForm({defaultValues:formData});
+    const {control, handleSubmit, formState:{isDirty}}=useForm({defaultValues:formData});
     const FORM_INPUTS = [
         {
             label: "NETFILE Access Code",
@@ -45,7 +45,11 @@ export default function Slide2({onNext,onBack,formData,visited}){
             {FORM_INPUTS.map(f => <FormGroup key={f.label} control={control} label={f.label} inputs={f.inputs}/>)}
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button onClick={onBack}  className={styles.btnBack} >Back</button>
+                    <button type={'button'} onClick={()=>{
+                        if(isDirty){
+                            if(window.confirm("There are unsaved changes. Are you sure want to go back?")) onBack();
+                        } else onBack()
+                    }} className={styles.btnBack} >Back</button>
                     <button type={'submit'} className={styles.btnNext} >Next</button>
                 </div>
 

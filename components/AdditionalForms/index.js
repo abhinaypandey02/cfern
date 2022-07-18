@@ -94,7 +94,9 @@ export default function FormT4({onBack,onNext, visited,formData}) {
             </div>
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button className={styles.btnBack} onClick={onBack}>Back</button>
+                    <button className={styles.btnBack} type={'button'} onClick={()=>{
+                        if (window.confirm("There might be unsaved changes. Are you sure want to go back?")) onBack();
+                    }}>Back</button>
                     <button className={styles.btnNext} type={'submit'}>Preview</button>
                 </div>
 

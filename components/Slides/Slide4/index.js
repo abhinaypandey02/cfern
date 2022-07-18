@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import SITE_VALUES from "../../../helpers/values/values.json";
 import {FormGroup} from "../../FormElements/FormGroup";
 export default function Slide4({onNext,onBack,formData,visited}){
-    const {watch, handleSubmit,control}=useForm({defaultValues:formData});
+    const {watch, handleSubmit,control,formState:{isDirty}}=useForm({defaultValues:formData});
     const FORM_INPUTS = [
         {
             label: <>In which <a href={'https://my.wealthsimple.com/tax/2021/?lang=en'}>province or territory did you live</a> on December 31, 2021? *</>,
@@ -21,7 +21,9 @@ export default function Slide4({onNext,onBack,formData,visited}){
             label: "If your province or territory of residence changed in 2021, enter the date of your move",
             inputs: [
                 {
-                    type: "date", name: "entryDate"
+                    type: "date", name: "entryDate", rules: {
+                        min:"2021-01-01", max:"2021-12-31"
+                    }
                 }
             ]
         },
@@ -107,7 +109,11 @@ export default function Slide4({onNext,onBack,formData,visited}){
             {FORM_INPUTS.map(f => <FormGroup key={f.label} control={control} label={f.label} inputs={f.inputs}/>)}
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button onClick={onBack} className={styles.btnBack} >Back</button>
+                    <button type={'button'} onClick={()=>{
+                        if(isDirty){
+                            if(window.confirm("There are unsaved changes. Are you sure want to go back?")) onBack();
+                        } else onBack()
+                    }} className={styles.btnBack} >Back</button>
                     <button type={'submit'} className={styles.btnNext} >Next</button>
                 </div>
             </div>

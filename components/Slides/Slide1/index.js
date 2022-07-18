@@ -5,7 +5,7 @@ import {FormGroup} from "../../FormElements/FormGroup";
 
 
 export default function Slide1({onNext, formData, visited, onBack}) {
-    const {watch, handleSubmit, control} = useForm({defaultValues: formData});
+    const {watch, handleSubmit, control, formState:{isDirty}} = useForm({defaultValues: formData});
 
     const FORM_INPUTS = [
         {
@@ -86,7 +86,11 @@ export default function Slide1({onNext, formData, visited, onBack}) {
             {FORM_INPUTS.map(f => <FormGroup key={f.label} control={control} label={f.label} inputs={f.inputs}/>)}
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button onClick={onBack} className={styles.btnBack}>Back</button>
+                    <button type={'button'} onClick={()=>{
+                        if(isDirty){
+                            if(window.confirm("There are unsaved changes. Are you sure want to go back?")) onBack();
+                        } else onBack()
+                    }} className={styles.btnBack}>Back</button>
                     <button type={'submit'} className={styles.btnNext}>Next</button>
                 </div>
             </div>

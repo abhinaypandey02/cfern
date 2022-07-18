@@ -4,7 +4,7 @@ import SITE_VALUES from "../../../helpers/values/values.json";
 import {FormGroup} from "../../FormElements/FormGroup";
 
 export default function Slide6({onNext,onBack,formData,visited}){
-    const {handleSubmit, watch,control}=useForm({defaultValues:formData});
+    const {handleSubmit, watch,control, formState:{isDirty}}=useForm({defaultValues:formData});
     const FORM_INPUTS = [
         {
             label: "Did you own or hold specified foreign property where the total cost amount of all such property, at any time in the year, was more than CAN$100,000 in 2021? You are allowed to say No to this question in the year you became a Canadian resident.",
@@ -77,7 +77,11 @@ export default function Slide6({onNext,onBack,formData,visited}){
 
             <div className={styles.formGroup}>
                 <div className={styles.inputGroup}>
-                    <button onClick={onBack} className={styles.btnBack} >Back</button>
+                    <button type={'button'} onClick={()=>{
+                        if(isDirty){
+                            if(window.confirm("There are unsaved changes. Are you sure want to go back?")) onBack();
+                        } else onBack()
+                    }} className={styles.btnBack} >Back</button>
                     <button type={'submit'} className={styles.btnNext} >Next</button>
                 </div>
 
