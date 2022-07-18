@@ -1,0 +1,28 @@
+.formGroup {
+  margin: 15px 10px;
+
+  .formLabel {
+    color: #1a1817;
+    margin: 4px;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .inputGroup{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+
+    input, select {
+      width: 100%;
+      padding: 8px 6px;
+      background-color: #fff;
+      border: 1px solid #73706e;
+      border-radius: 5px 5px 5px 5px;
+      color: #403e3d;
+      font-weight: lighter;
+      outline: none;
+    }
+  }
+
+}

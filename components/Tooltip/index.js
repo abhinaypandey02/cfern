@@ -3,7 +3,7 @@ import {useState} from "react";
 
 export default function Tooltip({text}){
     const [show,setShow]=useState(false);
-    return <span className={'relative mx-2'}>
+    return <span className={'relative mx-2 my-auto'}>
         {show&&<div className={styles.tooltipRight+" "}>
             {text}
         </div>}
