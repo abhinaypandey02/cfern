@@ -92,7 +92,7 @@ export default function Slide4({onNext,onBack,formData,visited}){
         },{
             label: "Do you agree that it is your responsibility to properly report your income, allowable credits and deductions?",
             inputs: [
-                {options:SITE_VALUES.BINARY_CHOICE, name: "agreeResponsibility", wrapperClassName: "w-[100px]",rules:{validate:{onlyYes:v=> v === '1'}}
+                {options:SITE_VALUES.BINARY_CHOICE,visibility:watch("newImmigrantTax")==='1', name: "agreeResponsibility", wrapperClassName: "w-[100px]",rules:{validate:{onlyYes:v=> v === '1'}}
                 }
             ],
 

@@ -67,13 +67,6 @@ export default function Slide5({onNext,onBack,formData,visited}){
                 }
             ],
 
-        },{
-            label: "Do you agree that it is your responsibility to properly report your income, allowable credits and deductions?",
-            inputs: [
-                {options:SITE_VALUES.BINARY_CHOICE, name: "agreeResponsibility", wrapperClassName: "w-[100px]",rules:{validate:{onlyYes:v=> v === '1'}}
-                }
-            ],
-
         },
     ]
     const formContainerStyle=visited?styles.backAnim:styles.nextAnim;
