@@ -10,8 +10,7 @@ export function T4({deleteForm, showDelete, form, setT4Forms}) {
     const IMP = [14, 16, 17, 18, 20, 22, 24, 26, 44, 46, 50, 52, 55, 56, 29];
     const T4Validations={
         16:{
-            type:'number',
-            max:290.51
+            type:'number'
         },
         17:{
             notAllowed:(form.cpp||form.ei||(form.ppip&&form.box10!=='QC')),
