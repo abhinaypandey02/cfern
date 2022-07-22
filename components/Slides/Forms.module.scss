@@ -1,11 +1,23 @@
 @keyframes next {
-  0% { margin-left: 900px; }
-  100% { margin-left: 0; }
+  0% {
+    margin-left: 900px;
+  }
+
+  100% {
+    margin-left: 0;
+  }
 }
+
 @keyframes back {
-  0% { margin-right: 900px; }
-  100% { margin-right: 0; }
+  0% {
+    margin-right: 900px;
+  }
+
+  100% {
+    margin-right: 0;
+  }
 }
+
 .formContainer {
   width: 50%;
   padding: 40px;
@@ -15,57 +27,71 @@
   -webkit-box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
   -moz-box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
   box-shadow: rgb(59 59 59 / 5%) 0px 5px 15px 0px;
-  @media (max-width: 991.98px) { 
-     width: 90%;
+
+  @media (max-width: 991.98px) {
+    width: 90%;
     padding: 25px;
     margin: 20px;
   }
-  a{
+
+  a {
     color: #4545b9;
 
   }
-  a:hover{
+
+  a:hover {
     text-decoration: underline;
   }
-  .customAnchor{
+
+  .customAnchor {
     font-size: 13px;
     margin: auto 10px;
   }
 }
-.activeFormContainer{
+
+.activeFormContainer {
   @extend .formContainer;
   border: 2px solid blue;
 }
-.nextAnim{
+
+.nextAnim {
   @extend .formContainer;
   animation: next 0.5s;
 }
-.backAnim{
+
+.backAnim {
   @extend .formContainer;
   animation: back 0.5s;
 }
-.btnNext{
+
+.btnNext {
   margin: 4px;
   @apply font-bold py-2 px-4 rounded bg-blue-500 text-white
 }
-.btnNext:hover{
+
+.btnNext:hover {
   @apply bg-blue-700;
 }
-.btnBack{
+
+.btnBack {
   margin: 4px;
   @apply bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500 rounded
 }
-.btnNext:disabled{
+
+.btnNext:disabled {
   @apply bg-blue-400;
 }
-.btnBack:hover{
+
+.btnBack:hover {
   //@apply bg-blue-500 text-white border-transparent
 }
-.t4formGroup{
+
+.t4formGroup {
   margin: 5px 10px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+
   .formLabel {
     position: relative;
     color: #1a1817;
@@ -74,12 +100,15 @@
     font-size: 14px;
     cursor: pointer;
   }
-  .inputGroup{
+
+  .inputGroup {
     display: flex;
     align-items: center;
     position: relative;
     flex-wrap: wrap;
-    input, select {
+
+    input,
+    select {
       max-width: 130px;
       margin: 4px;
       padding: 8px 6px;
@@ -90,5 +119,37 @@
       outline: none;
     }
   }
+
+}
+
+
+.previewContainer {
+  margin-left: 5vw;
+  width: 90vw;
+  min-height: 100vh;
+  display: flex;
+}
+
+.previewFormContainer {
+  flex: 1;
+  height: 80%;
+
+}
+
+
+
+.previewFormContainer iframe {
+  width: 100%;
+  height: 80vh;
+  -ms-transform: scale(.5);
+  -moz-transform: scale(.5);
+  -o-transform: scale(.5);
+  -webkit-transform: scale(.5);
+  transform: scale(1);
+  -ms-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
 
 }
